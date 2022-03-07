@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 
+         DI (의존성 주입) : 멤버변수에 값을 주입(초기화) , 생성자를 통해서 주입
+                                                  메소드 호출이 가능(객체 생성시, 객체소멸시) 
+     -->
+     <bean id="sa1" class="com.sist.di.Sawon">
+       <property name="name">
+         <value>홍길동</value> <!-- sa.setName("홍길동") -->
+       </property>
+       <property name="dept">
+         <value>개발부</value> <!-- sa.setDept("개발부") -->
+       </property>
+       <property name="job">
+         <value>대리</value> <!-- sa.setJob("대리") -->
+       </property>
+       <property name="age">
+         <value>25</value> <!-- sa.setAge(25) -->
+       </property>
+       <property name="pay">
+         <value>3000</value> <!-- sa.setPay(3000) -->
+       </property>
+     </bean>
+     
+     <bean id="sa2" class="com.sist.di.Sawon">
+       <property name="name" value="심청이"/>
+       <property name="dept" value="기획부"/>
+       <property name="job" value="과장"/>
+       <property name="age" value="30"/>
+       <property name="pay" value="4500"/>
+     </bean>
+     <!--  가장 많이 사용  -->
+     <bean id="sa3" class="com.sist.di.Sawon"
+       p:name="박문수"
+       p:dept="영업부"
+       p:job="대리"
+       p:age="28"
+       p:pay="3700"
+     />
+</beans>
