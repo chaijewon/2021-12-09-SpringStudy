@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 클래스 등록 = 메뉴얼 제작  
+         3.9.12 이상 => Ctrl+Space 
+                  클래스는 사용자 정의 클래스만 등록하는 것이 아니고 라이브러리도 등록이 가능 
+                                            MyBatis
+    -->
+    <!-- 
+                  태그와 속성을 만든다 (XML)
+                  1. 스프링에서 지원하는 태그와 속성만 사용이 가능 
+                  2. 대소문자를 구분한다 
+                  3. 속성값을 줄때 반드시 ""
+                  4. 여는 태그와 닫는 태그가 동일 
+                                    태그의 종류
+                     = 여는 태그 : <bean>
+                     = 닫는 태그 : </bean>
+                     = 빈(Empty) 태그  <bean/>
+         <bean> 스프링에서 관리하는 클래스 등록 (등록이 안된 경우에는 관리안됨)
+                   속성  
+           id : 구분자 (중복 없이 사용) => 스프링에서 클래스를 찾아서 사용 
+                (필수) 
+           class : 패키지명부터 클래스명까지 등록 => 메모리 할당 
+           scope : 사용범위 
+                   singleton 
+                   prototype => clone(복제)
+           init-method : 시작과 동시에 호출해야되는 메소드가 있는 경우 
+           destory-method : 메모리 해제시에 사용된 메소드 
+                            (서버 , 데이터베이스 ...) = System.gc()
+                            
+         스프링에서의 동작 순서 
+         1. XML을 읽어 온다 
+         2. 등록된 클래스의 메모리 할당 
+         3. => DI 수행 (해당 클래스에 필요한 데이터를 주입:변수 초기화)
+         4. => init-method 호출 
+         5. => 프로그래머가 활용 (스프링으로부터 클래스 객체 얻어서 사용)
+         6. => destory-method를 호출 => 메모리 해제 
+         == 스프링에서 하는 역할 객체의 생명주기 
+                           =========== 생성 ~ 소멸
+         == 역할 
+            1) 객체 생성 
+            2) 변수값 주입 (DI) => setter,construcor
+            3) DL (객체를 찾아주는 역할 수행) => getBean(id)
+            4) VO를 제외한 모든 클래스는 등록후에 사용 
+            5) 클래스 등록 
+               =========
+                Map에 등록 한다
+                =================
+                   id  class
+                =================================================
+                  sa   Class.forName("com.sist.container.Sawon")
+                =================================================
+                 Sawon s=spring.getBean("sa") => new가 필요가 없어진다 
+       
+           scope를 사용하지 않는 경우에는 singleton이 default다            
+     -->
+    <bean id="sa" class="com.sist.container.Sawon" scope="prototype"></bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
