@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Connection관련 : 전체 설정(한개만 설정)-->
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+    <typeAlias type="com.sist.di.EmpVO" alias="EmpVO"/>
+    <typeAlias type="com.sist.di2.BooksVO" alias="BooksVO"/>
+    <typeAlias type="com.sist.di3.HotelVO" alias="HotelVO"/>
+    <!-- 
+        while(rs.next())
+        {
+           EmpVO vo=new EmpVO();
+           ==
+           ==
+           list.add(vo);
+        }
+     -->
+  </typeAliases>
+  <mappers>
+    <mapper resource="com/sist/di/emp-mapper.xml"/>
+    <mapper resource="com/sist/di2/books-mapper.xml"/>
+    <mapper resource="com/sist/di3/hotel-mapper.xml"/>
+  </mappers>
+</configuration>

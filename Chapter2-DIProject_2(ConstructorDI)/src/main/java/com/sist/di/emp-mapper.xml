@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.di.emp-mapper">
+  <!-- SQL문장 (PreparedStatement,ResultSet)
+       SQL문장 전송후 결과값을 받는 위치 
+   -->
+   <select id="empListData" resultType="EmpVO">
+    SELECT empno,ename,job,hiredate,sal
+    FROM emp
+   </select>
+   <!-- 
+        Class clsName=Class.forName("EmpVO");
+        Object obj=clsName.newInstance(); ==> EmpVO vo=new EmpVO()
+        = 클래스의 이름으로 메모리 할당이 가능 
+        Method[] method=clsName.getDeclearMethods()
+        for(Method m:method)
+        {
+            if(m.getName().equalsIgnocase("set"+column)) => DI
+        }
+        public List<EmpVO> empListData()
+        {
+             List<EmpVO> list=new ArrayList<EmpVO>
+             try
+             {
+                 getConnection();
+                 String sql="";
+                 = SELECT empno,ename,job,hiredate,sal FROM emp
+                 ps=conn.preparedStatement(sql);
+                 ResultSet rs=ps.executeQuery();
+                 while(rs.next())
+                 {
+                    EmpVO vo=new EmpVO();
+                    vo.setEmpno(rs.getInt("empno"));
+                    vo.setEname(rs.getString("ename"));
+                    vo.setJob(rs.getString("job"));
+                    vo.setHiredate(rs.getDate("hiredate"));
+                    vo.setSal(rs.getInt("sal"));
+                    list.add(vo);
+                 }
+             }catch(Exception ex)
+             {
+                ex.printStackTrace();
+             }
+             finally
+             {
+                 disConnection();
+             }
+             return list;
+        }
+    -->
+</mapper>

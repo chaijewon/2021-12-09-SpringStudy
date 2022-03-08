@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.di2.books-mapper">
+  <select id="booksListData" resultType="BooksVO">
+   SELECT title,author,price
+   FROM books
+  </select>
+</mapper>
+<!-- 
+     Spring 
+       Java
+                변수(멤버변수 , 지역변수)
+                연산자 , 제어문 , 메소드 , 클래스 구성요소 ,클래스종류,객체지향 
+                예외처리,라이브러리 (String , Wrapper(Integer), Collection,File)
+       Oracle
+        DML : SELECT , INSERT , UPDATE , DELETE
+              = JOIN / SUBQUERY 
+        DDL : CREATE , DROP , ALTER
+       HTML/CSS
+       ========
+         HTML => 태그
+                 <div> , <span> , <h1~h3> , <table> 
+                 <img> , <a> , <form> , <input> , <select> ,<textarea>
+         CSS => margin , width , height , text-align : 이미 존재=>약간 수정
+       JavaScript
+                  변수(let,var,const) , 연산자 , 제어문 , 함수
+         => 라이브러리 (Jquery(Ajax) , VueJS , ReactJS)
+                    ============= 
+         => Selector 
+ -->
+ 
+ 
+ 
+ 
