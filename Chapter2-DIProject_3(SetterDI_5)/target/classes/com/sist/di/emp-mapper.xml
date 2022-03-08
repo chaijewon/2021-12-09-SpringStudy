@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.di.emp-mapper">
+ <!-- 
+       호출 
+       <select> 
+         1. selectList(id) => SQL문장을 실행 , resultType에 등록된 
+                              VO에 값을 채워준다 
+                 SELECT COUNT(*) FROM table_name
+                 => resultType="int"
+                 SELECT pwd FROM table_name
+                 => resultType="string"
+         2. selectOne()
+  -->
+ <select id="empListData" resultType="EmpVO">
+  SELECT empno,ename,job,hiredate,sal
+  FROM emp
+ </select>
+</mapper>

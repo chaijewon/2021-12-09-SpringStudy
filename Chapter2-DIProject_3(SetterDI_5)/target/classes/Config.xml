@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+    <typeAlias type="com.sist.di.EmpVO" alias="EmpVO"/>
+    <typeAlias type="com.sist.di2.LocationVO" alias="LocVO"/>
+  </typeAliases>
+  <mappers>
+    <mapper resource="com/sist/di/emp-mapper.xml"/>
+    <mapper resource="com/sist/di2/location-mapper.xml"/>
+  </mappers>
+</configuration>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+     JDBC 
+      1. Connection 생성 , 닫기 
+      2. PreparedStatement 생성 , 처리
+      3. ResultSet을 이용해서 결과값을 얻어 온다 
+      4. VO가 가지고 있는 setXxx()에 값을 채운다
+     MyBatis 
+      1. Connection 생성,닫기 = 자동 처리
+         =========== 오라클 정보 설정 (BasicDataSource)
+      2. PreparedStatement 생성 , 처리 = 자동 처리
+         =========== mapper.xml
+      3. ResultSet = 자동처리 
+      4. VO가 가지고 있는 setXxx()에 값을 채운다 = 자동처리
+         ===================== resultType
+         1) Config.xml => getConnection(),disConnection()
+         2) mapper.xml => PreparedStatement/ResultSet 
+       
+ -->
+<mapper namespace="com.sist.di2.location-mapper">
+ <sql id="select">
+  SELECT title as name,msg as message,address as addr
+  FROM seoul_location
+ </sql>
+ <select id="locationListData" resultType="LocVO">
+  <include refid="select"/>
+ </select>
+ <select id="locationFindData" resultType="LocVO" parameterType="string">
+  <include refid="select"/>
+  WHERE address LIKE '%'||#{address}||'%'
+ </select>
+</mapper>
+
+
+
+
+
