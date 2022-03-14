@@ -8,12 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
     <!-- Database 정보 설정 -->
-    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
-      p:driverClassName="oracle.jdbc.driver.OracleDriver"
-      p:url="jdbc:oracle:thin:@211.63.89.131:1521:XE"
-      p:username="hr"
-      p:password="happy"
-    />
+    <!-- 순서는 상관이 없다  -->
     <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
       p:dataSource-ref="ds"
     />
@@ -23,6 +18,12 @@
     />
     <bean id="dao" class="com.sist.dao.BooksDAO"
       p:mapper-ref="mapper"
+    />
+    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+      p:driverClassName="oracle.jdbc.driver.OracleDriver"
+      p:url="jdbc:oracle:thin:@211.63.89.131:1521:XE"
+      p:username="hr"
+      p:password="happy"
     />
     
 </beans>
