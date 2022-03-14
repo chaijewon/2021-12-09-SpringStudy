@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <context:component-scan base-package="com.sist.*"/>
+    <!-- 패키지 단위로 클래스 메모리 할당 (가장 많이 사용) -->
+    <!-- 
+                  메모리 할당
+                  클래스마다 기능별로 어노테이션 
+         @Component : 일반 클래스, MainClass,~Manager
+         @Repository : DAO (저장소), 
+         @Service : BI (DAO가 여러개를 묶어서 한번에 사용할때, 
+         
+         Web에서만 사용이 가능 
+         ===========================================================
+         @Controller : Model클래스 (반드시 올려서 사용), 
+         @RestController : JSON , 일반 자바 스크립트 , => React,Vue,Ajax 
+         @ControllerAdvice : 예외처리를 공통으로 사용 (Exception), 
+         ===========================================================
+         @Configuration : 자바로 클래스 등록 
+         
+         DI
+         @Autowired , 스프링에서 자동 주입  
+         @PostConstruct, => init-method (객체 생성시에 호출하는 메소드)
+         @PreDestroy,  => destory-method (객체 소멸시에 호출하는 메소드)
+         @Resource , 객체  대상을 선택하는 경우 (1.8에서만 사용이 가능)
+     -->
+</beans>
