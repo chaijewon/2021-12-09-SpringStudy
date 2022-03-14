@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <!-- 메뉴얼 -->
+    <!-- 사용자 정의 클래스 등록 (패키지단위로 등록) -->
+    <context:component-scan base-package="com.sist.*"/>
+    <!-- 
+                     기능별 클래스 분류(클래스위에 7중에 한개가 올려가야 메모리 할당)
+          ***@Component : 일반 클래스 (MainClass , ~Manager)
+          ***@Repository : ~DAO (데이터베이스와 관련 => 저장소)
+          ***@Service : DAO가 여러개 , 인터페이스 구현 
+           =========
+          @Controller : Model클래스  ~Model (~Controller)
+              => return (파일명) => 이동  
+          @RestController : Model클래스  ~Model (~Controller)
+              => return 문자열 (Ajax , VueJS , ReactJS , Kotlin)
+              => JSON
+              => 최근에 가장 많이 사용하는 기술 (jsp를 사용하지 않을 수 있다)
+              => JavaScript를 전송이 가능 
+          @ControllerAdvice 
+              => Model에서 발생하는 예외처리를 한번에 처리 
+          @Configuration : 순수하게 자바를 이용해서 스프링 환경 설정 파일 제작 
+                           app.xml => 대신 사용이 가능 (스프링 5기조)
+     -->
+    <!-- 라이브러리 클래스 등록  : bean태그를 이용해서 등록 
+         BasicDataSource
+         SqlSessionFactoryBean
+         MapperFactoryBean 
+    -->
+    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+       p:driverClassName="oracle.jdbc.driver.OracleDriver"
+       p:url="jdbc:oracle:thin:@211.63.89.131:1521:XE"
+       p:username="hr"
+       p:password="happy"
+    />
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+       p:dataSource-ref="ds"
+    />
+    <!-- com.sist.mapper에 들어가 있는 모든 인터페이스를 구현 -->
+    <mybatis-spring:scan base-package="com.sist.mapper"/>
+</beans>
+
+
+
+
+
+
+
