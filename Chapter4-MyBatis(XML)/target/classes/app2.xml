@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <util:properties id="db" location="classpath:db.properties"/>
+    <!-- 데이터베이스 정보를 모아서 전송 (DataSource) 
+         setterDI => 시작과 동시에 필요한 데이터를 스프링을 통해서 전송(Injection)
+            DI
+         <bean>
+           <property name="name" value="홍길동"> => setName("홍길동")
+         </bean>
+         <bean id="" class=""  => setName("심청이")
+          p:name="심청이"
+         />
+    -->
+    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+      p:driverClassName="#{db['driver']}"
+      p:url="#{db['url']}"
+      p:username="#{db['username']}"
+      p:password="#{db['password']}"
+    />
+    <!-- 
+           public Connection getConnection()
+		   {
+			   Connection conn=null;
+			   try
+			   {
+				   Context init=new InitialContext();
+				   Context c=(Context)init.lookup("java://comp//env");
+				   DataSource ds=(DataSource)c.lookup("jdbc/oracle");
+				   conn=ds.getConnection();
+			   }catch(Exception ex){}
+			   return conn;
+		   }
+		   public void disConnection(Connection conn,PreparedStatement ps)
+		   {
+			   try
+			   {
+				   if(ps!=null) ps.close();
+				   if(conn!=null) conn.close();
+			   }catch(Exception ex){}
+		   }
+     -->
+    <!-- MyBatis로 전송 : getConnection,disConnection-->
+    <!-- 
+            class SqlSessionFactoryBean
+            {
+                DataSource ds=new DataSource();
+                // 객체 주소를 첨부할때 => p:dataSource-ref
+                                                 ===== 객체 주소
+                public void setDataSource(DataSource ds)
+                {
+                    this.ds=ds;
+                }
+            }
+     -->
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+      p:dataSource-ref="ds"
+    />
+    <!-- 인터페이스 구현 (EmpMapper) : MapperFactoryBean -->
+    <bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+      p:sqlSessionFactory-ref="ssf"
+      p:mapperInterface="com.sist.dao2.EmpMapper"
+    />
+    <!-- 구현된 인터페이스를 DAO에서 받아서 처리  -->
+    <bean id="dao" class="com.sist.dao2.EmpDAO"
+      p:mapper-ref="mapper"
+    />
+</beans>
+
+
+
+
+
+
+
+
+
+
+

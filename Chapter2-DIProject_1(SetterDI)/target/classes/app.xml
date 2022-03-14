@@ -24,7 +24,7 @@
          <value>3000</value> <!-- sa.setPay(3000) -->
        </property>
      </bean>
-     
+     <!-- Database정보 , 객체 주소 주입 -->
      <bean id="sa2" class="com.sist.di.Sawon">
        <property name="name" value="심청이"/>
        <property name="dept" value="기획부"/>
