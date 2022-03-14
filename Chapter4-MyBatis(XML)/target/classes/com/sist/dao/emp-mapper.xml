@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.emp-mapper">
+ <!-- sql문장 제작 : PreparedStatement,ResultSet -->
+ <!-- sql , select , update , delete , insert -->
+ <select id="empListData" resultType="EmpVO">
+   SELECT empno,ename,job,hiredate,sal,deptno
+   FROM emp
+ </select>
+ <!-- 상세보기 -->
+ <select id="empDetailData" resultType="EmpVO" parameterType="int">
+   SELECT empno,ename,job,hiredate,sal,deptno
+   FROM emp
+   WHERE empno=#{empno}
+ </select>
+ <!-- JOIN시에는 반드시 resultMap설정 -->
+ <resultMap type="EmpVO" id="empMap">
+   <result property="empno" column="empno"/>
+   <result property="ename" column="ename"/>
+   <result property="job" column="job"/>
+   <result property="hiredate" column="hiredate"/>
+   <result property="sal" column="sal"/>
+   <result property="deptno" column="deptno"/>
+   <result property="dvo.dname" column="dname"/>
+   <result property="dvo.loc" column="loc"/>
+ </resultMap>
+ 
+ <!-- 중복이 있는 경우에 처리하는 태그  -->
+ <sql id="join-sql">
+   SELECT empno,ename,job,hiredate,sal,emp.deptno,dname,loc
+   FROM emp,dept
+   WHERE emp.deptno=dept.deptno
+ </sql>
+ <select id="empDeptJoinData" resultMap="empMap">
+   <include refid="join-sql"/>
+ </select>
+ <select id="empDeptDetailData" resultMap="empMap" parameterType="int">
+   <include refid="join-sql"/>
+   AND empno=#{empno}
+ </select>
+ <!-- 
+       while(rs.next())
+       {
+           EmpVO vo=new EmpVO();
+           <result property="empno" column="empno"/>
+           vo.setEmpno(rs.getInt("empno"))
+           vo.setEname(rs.getString("ename"))
+           =
+           =
+           =
+           =vo.getDvo().setDname(rs.getString("dname))
+           vo.getDvo().setLoc(rs.getString("loc"))
+           index번호를 사용하지 않고 컬럼명을 사용해서 데이터를 읽어 온다 
+       }
+  -->
+</mapper>
+
+
+
+
+
+
+

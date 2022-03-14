@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <!-- 
+                   스프링의 핵심
+            1) Container : 클래스관리(객체의 생명주기)
+                           1. 객체 생성 
+                           2. 필요한 데이터 주입 
+                              DI
+                               = setter DI (setXxx()에 값을 첨부)
+                               = constructor DI(생성자 매개변수)
+                                 method DI
+                               = 객체생성시에 호출 : init-method 
+                                                                  객체 소멸시에 호출 : destory-method
+                           3. 객체 소멸  
+               BeanFactory
+                  |
+            ======================
+            |                    |
+          ApplicationContext  AnnotationConfigApplicationContext(5)
+              xml로 등록                         순수하게 자바로 처리 
+            |
+        WebApplicationContext
+     -->
+    <!-- 클래스 등록  -->
+    <!-- classpath=src/main/java -->
+    <util:properties id="db" location="classpath:db.properties"/>
+    <!-- 오라클 연결 (정보 생성) = BasicDataSource -->
+    <!-- 
+          BasicDataSource ds=new BasicDataSource();
+          ds.setDriverClassName("")
+          ds.seturl("")
+          ds.setUsername("")
+          ds.setPassword("")
+          
+          map.put("ds",ds) = 시작과 동시에 한번 저장 (주소값이 변경된지 않는다)
+                             = 필요시만다 사용이 가능 (싱글턴)
+                    스프링에서의 객체 생성 = 싱글턴(복제 => scope="prototype") 
+     -->
+    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+       p:driverClassName="#{db['driver']}"
+       p:url="#{db['url']}"
+       p:username="#{db['username']}"
+       p:password="#{db['password']}"
+    />
+    <!-- MyBatis연결 = SqlSessionFactoryBean -->
+    <!-- 
+           private static SqlSessionFactory ssf;
+           // 자동으로 읽어서 저장 => 초기화 블록 , 생성자 
+		   static
+		   {
+			   try
+			   {
+				   Reader reader=Resources.getResourceAsReader("Config.xml");
+				   ssf=new SqlSessionFactoryBuilder().build(reader);
+				   //XML에 저장된 데이터를 읽어서 메모리에 저장 
+			   }catch(Exception ex)
+			   {
+				   ex.printStackTrace();
+			   }
+		   }
+     -->
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+       p:dataSource-ref="ds"
+       p:configLocation="classpath:Config.xml"
+    />
+    <!-- DAO생성 => 연결  -->
+    <!-- 
+          EmpDAO dao=new EmpDAO()
+          dao.setSqlSessionFactory(ssf)
+          map.put("dao",dao) = getBean("dao") 
+     -->
+    <bean id="dao" class="com.sist.dao.EmpDAO"
+       p:sqlSessionFactory-ref="ssf"
+    />
+    <!-- 스프링에서 관리 : 기능을 가지고 있는 클래스만 등록 , VO(데이터형으로 사용)제외 -->
+</beans>
+
+
+
+
+
+
