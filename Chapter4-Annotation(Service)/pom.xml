@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sist</groupId>
-	<artifactId>mybatis</artifactId>
-	<name>Chapter4-MyBatis(XML)</name>
+	<artifactId>anno</artifactId>
+	<name>Chapter4-Annotation(Service)</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -21,19 +21,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-	    <dependency>
-		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
-		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
-		    <version>1.16</version>
-		</dependency>
-	    <!-- lombok(VO getter/setter,생성자 -->
-	    <dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.22</version>
-		    <scope>provided</scope>
-		</dependency>
-	    
 	    <!-- Oracle 
 	         ojdbc8이 다운로드하는 곳이 존재하지 않는다 
 	    -->

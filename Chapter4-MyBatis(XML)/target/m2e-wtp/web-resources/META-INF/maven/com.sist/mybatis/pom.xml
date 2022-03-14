@@ -21,6 +21,11 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	    <dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+		    <version>1.16</version>
+		</dependency>
 	    <!-- lombok(VO getter/setter,생성자 -->
 	    <dependency>
 		    <groupId>org.projectlombok</groupId>
