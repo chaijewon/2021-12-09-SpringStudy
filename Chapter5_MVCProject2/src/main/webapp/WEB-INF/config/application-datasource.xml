@@ -13,13 +13,33 @@
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
-    <!-- 데이터베이스 관련 : 트랜젝션 설정  -->
+    <!-- 데이터베이스 관련 : 트랜젝션 설정  
+        net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    -->
     <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
         p:driverClassName="oracle.jdbc.driver.OracleDriver"
-        p:url="jdbc:oracle:thin:@localhost:1521:XE"
+        p:url="jdbc:oracle:thin:@211.63.89.131:1521:XE"
         p:username="hr"
         p:password="happy"
     />
+    <!-- <bean id="ds1" class="org.apache.commons.dbcp.BasicDataSource"
+        p:driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
+        p:url="jdbc:log4jdbc:oracle:thin:@211.63.89.131:1521:XE"
+        p:username="hr"
+        p:password="happy"
+        
+    /> -->
+    <bean id="dataSource" 
+          class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> 
+      <constructor-arg ref="ds" /> 
+      <property name="logFormatter"> 
+        <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter"> 
+        <property name="loggingType" value="MULTI_LINE" /> 
+        <property name="sqlPrefix" value="SQL : "/> 
+        </bean> 
+      </property> 
+    </bean>
+
     <!-- MyBatis연결 -->
     <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
         p:dataSource-ref="ds"
