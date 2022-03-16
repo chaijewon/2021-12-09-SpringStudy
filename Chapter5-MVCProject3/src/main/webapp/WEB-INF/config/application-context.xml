@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <!-- 1. 사용자 정의 클래스 메모리 할당 요청 -->
+    <context:component-scan base-package="com.sist.*"/>
+    <!-- 
+                  선택적인 메모리 할당 요청 = 어노테이션 
+         = 클래스별 종류
+         @Component, : Jsoup 데이터 크롤링 , XML 파싱 ...
+         @Repository, : 데이터베이스 관리 (DAO)
+         @Service, : BI (DAO통합)
+         @Controller, : Model 클래스 : 요청 처리 , 결과값 전송 
+                                               전송받을 JSP가 등록(화면이동)
+                        forward() , sendRedirect() => jsp지정(파일)
+         @RestController, : 해당 JSP로 데이터를 전송 
+                            @ResponseBody = @RestController
+                            = 자바스크립트 연동 (Ajax , VueJS , ReactJS)
+                            
+         @ControllerAdvice, : 통합 Exception 처리 
+         @Configuration : 자바로 환경 설정을 만들 경우에 사용 
+     -->
+     <!-- 2. JSP를 찾기  : ViewResolver(라이브러리는 bean 한개씩 등록) 
+          page 124
+     -->
+     <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/"
+          p:suffix=".jsp" 
+     />
+     
+</beans>

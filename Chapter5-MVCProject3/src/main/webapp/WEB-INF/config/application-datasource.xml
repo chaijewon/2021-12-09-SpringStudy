@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+   <!-- 데이터베이스 관련 : 마이바티스  -->
+   <util:properties id="db" location="/WEB-INF/config/db.properties"/>
+   <!-- properties파일 읽기 -->
+   <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+     p:driverClassName="#{db['driver']}"
+     p:url="#{db['url']}"
+     p:username="#{db['username']}"
+     p:password="#{db['password']}"
+     p:maxActive="#{db['maxActive']}"
+     p:maxIdle="#{db['maxIdle']}"
+     p:maxWait="#{db['maxWait']}"
+   />
+   <!-- MyBatis Log확인 (동작과정 , 실행결과 확인)  -->
+   <bean id="dataSource" 
+          class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> 
+      <constructor-arg ref="ds" /> 
+      <property name="logFormatter"> 
+        <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter"> 
+        <property name="loggingType" value="MULTI_LINE" /> 
+        <property name="sqlPrefix" value="SQL : "/> 
+        </bean> 
+      </property> 
+    </bean>
+    <!-- 
+                 1) 예외처리
+                 2) 트랜잭션 설정 
+                 3) 유효성 검사 
+                 4) 보안 설정 
+                 5) 웹소켓 설정  
+                 6) Ajax = VueJS
+     -->
+    <!-- Transcation 설정 -->
+    <!-- MyBatis설정 : getConection(),disConnection() -->
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+      p:dataSource-ref="dataSource"
+    />
+    <!-- mapper가 많은 경우에 패키지 단위로 등록 (mapper는 패키지를 따로 설정) -->
+    <mybatis-spring:scan base-package="com.sist.mapper"/>
+</beans>
+
+
+
+
+
