@@ -124,7 +124,8 @@ public class HotelController {
 	@GetMapping("hotel/detail.do")
 	public String hotel_detail(int no,Model model)
 	{
-		
+		HotelVO vo=dao.hotelDetailData(no);
+		model.addAttribute("vo", vo);
 		return "hotel/detail";
 	}
 	

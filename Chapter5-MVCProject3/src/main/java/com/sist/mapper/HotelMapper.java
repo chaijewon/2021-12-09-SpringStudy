@@ -37,7 +37,7 @@ public interface HotelMapper {
 	@Select("SELECT COUNT(*) FROM seoul_hotel")
 	public int hotelCount();
 	// 상세보기 => VO
-	@Select("SELECT no,name,poster,score,images "
+	@Select("SELECT no,name,poster,score,images,address "
 		   +"FROM seoul_hotel "
 		   +"WHERE no=#{no}")
 	public HotelVO hotelDetailData(int no);
