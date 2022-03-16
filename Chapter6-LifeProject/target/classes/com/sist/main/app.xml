@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+  <bean id="sa" class="com.sist.main.Sawon"
+    p:name="심청이"
+    p:sex="여자"
+  />
+</beans>
