@@ -51,11 +51,27 @@ public class DataBoardDAO {
 	   return mapper.databoardRowCount();
    }
    //6. 수정 읽기
+   public DataBoardVO databoardUpdateData(int no)
+   {
+	   return mapper.databoardDetailData(no); // 필요하면 재사용이 가능 
+   }
    //6-1. 수정하기 
+   public String databoardGetPassword(int no)
+   {
+	   return mapper.databoardGetPassword(no);
+   }
+   public void databoardUpdate(DataBoardVO vo)
+   {
+	   mapper.databoardUpdate(vo);
+   }
    //7. 삭제 
    //8. 찾기 => 동적 SQL => <if test=""> forEach <when>.... <trim>
    // ${} , #{} 차이점 
    // Procedure 처리 방법 
+   public List<DataBoardVO> databoardFindData(Map map)
+   {
+	   return mapper.databoardFindData(map);
+   }
 }
 
 

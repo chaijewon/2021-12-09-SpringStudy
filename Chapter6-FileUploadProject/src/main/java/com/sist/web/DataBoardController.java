@@ -4,17 +4,22 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sist.dao.*;
 import com.sist.vo.DataBoardVO;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.io.*;
+import java.net.*;
+
+import javax.servlet.http.HttpServletResponse;
 @Controller //Model => 반드시 설정 (HandlerMapping => @Controller가 있는 곳에서 
 //@GetMapping , @RequestMapping , @PostMapping 
 //@Controller가 없는 상테에서는 스킵
@@ -107,7 +112,7 @@ public class DataBoardController {
 			     mf.transferTo(file);// 실제 업로드 
 			  }catch(Exception ex){}
 			  tempName+=fn+",";
-			  tempSize=file.length()+",";
+			  tempSize+=file.length()+",";
 		  }
 		  tempName=tempName.substring(0,tempName.lastIndexOf(","));
 		  tempSize=tempSize.substring(0,tempSize.lastIndexOf(","));
@@ -125,6 +130,25 @@ public class DataBoardController {
   {
 	  // 오라클로부터 데이터 읽기 => DAO연결 
 	  DataBoardVO vo=dao.databoardDetailData(no);// 요청처리 (DAO연동)
+	  if(vo.getFilecount()!=0) // 파일이 업로드가 되었다면 
+	  {
+		  List<String> fList=new ArrayList<String>();//파일명 
+		  List<String> sList=new ArrayList<String>();//파일 크기 
+		  
+		  StringTokenizer st=new StringTokenizer(vo.getFilename(),",");
+		  while(st.hasMoreTokens())
+		  {
+			  fList.add(st.nextToken());
+		  }
+		  st=new StringTokenizer(vo.getFilesize(),",");
+		  while(st.hasMoreTokens())
+		  {
+			  sList.add(st.nextToken());
+		  }
+		  
+		  model.addAttribute("fList", fList);
+		  model.addAttribute("sList", sList);
+	  }
 	  model.addAttribute("vo", vo);//요청 결과값을 보낸다 
 	  return "databoard/detail"; // 결과값 화면을 보여준다 
   }
@@ -135,6 +159,76 @@ public class DataBoardController {
    *   4. 어떤 JSP를 보여줄것인지 설정 (return) => 새로운 JSP(jsp명) , 기존의 JSP(redirect)
    *   
    */
+  @GetMapping("download.do")
+  public void databoard_download(String fn,HttpServletResponse response) throws Exception
+  {
+	  // Cookie => request , 전송 (응답) => response
+	  // 내장 객체가 아니다 => 어노테이션 
+	  // 1. header전송 => 다운로드창 열어준다 (파일 크기 , 파일 명)
+	  response.setHeader("Content-Disposition", "attachment;filename="
+			                          +URLEncoder.encode(fn, "UTF-8"));
+	  File file=new File("c:\\upload\\"+fn);
+	  response.setContentLength((int)file.length());//프로그래스바 
+	  // 2. 저장 버튼 => 실제데이터 다운로드 
+	  // 파일 COPY
+	  BufferedInputStream bis=
+			  new BufferedInputStream(new FileInputStream(file));
+	  BufferedOutputStream bos=
+			  new BufferedOutputStream(response.getOutputStream());
+	  // response.getOutputStream() => 사용자 다운로드 위치 
+	  int i=0;
+	  byte[] buffer=new byte[1024];
+	  while((i=bis.read(buffer, 0, 1024))!=-1) //-1 EOF
+	  {
+		  // i는 문자한개 => byte갯수 읽기
+		  bos.write(buffer, 0, i);
+	  }
+	  bis.close();
+	  bos.close();
+  }
+  @GetMapping("update.do")
+  public String databoard_update(int no,Model model)
+  {
+	  DataBoardVO vo=dao.databoardUpdateData(no);
+	  model.addAttribute("vo", vo);
+	  return "databoard/update";
+  }
+  @PostMapping("update_ok.do") // detail.do => redirect(Model)
+  /*
+   *   수정 => 비밀번호 검사 => true (detail.do)
+   *                       false (history.back())
+   *   Ajax로 처리 
+   */
+  public String databoard_update_ok(DataBoardVO vo,RedirectAttributes ra)
+  {
+	  /*
+	   *   return "redirect:detail.do" 
+	   *      => sendRedirect() => GET => ?를 이용해서 데이터 전송 
+	   *          ** request를 사용하지 않는다 (request가 초기화)
+	   *      => RedirectAttributes이용해서 데이터 전송이 가능 
+	   *   return "databoard/list"
+	   *      => forward => request에 값을 담아서 전송 
+	   *      => Model을 이용해서 전송 
+	   */
+	  // DAO에 연결 
+	  dao.databoardUpdate(vo);
+	  ra.addAttribute("no", vo.getNo());
+	  // detail.do?no=값
+	  return "redirect:detail.do";
+  }
+  // 찾기 
+  @PostMapping("find.do")
+  public String database_find(String fs,String ss,Model model)
+  {
+	  // DB검색 => 데이터 읽기 
+	  Map map=new HashMap();
+	  map.put("fs",fs);
+	  map.put("ss", ss);
+	  List<DataBoardVO> list=dao.databoardFindData(map);
+	  model.addAttribute("list", list);
+	  model.addAttribute("len", list.size());
+	  return "databoard/find";
+  }
 }
 
 
