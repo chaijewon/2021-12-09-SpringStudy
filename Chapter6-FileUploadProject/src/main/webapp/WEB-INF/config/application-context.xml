@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+    <!-- 사용자 정의 클래스 메모리 할당 (객체 관리:생성~소멸) -->
+    <context:component-scan base-package="com.sist.*"/>
+    <!-- 
+            메모리 할당되는 클래스 : 반드시 어노테이션이 존재해야 한다 
+        @Component, 
+        ***@Repository, 
+        @Service, 
+        ***@Controller, 
+        @RestController, 
+        ***@ControllerAdvice, 
+        @Configuration
+     -->
+    <mvc:annotation-driven/><!-- RedirectAttributes클래스 사용시 -->
+    <!--View Resolver 설정 : JSP(경로명,확장자 입력) -->
+    <bean id="viewResolver"
+       class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+       p:prefix="/"
+       p:suffix=".jsp"
+    />
+    <!-- 파일업로드 사용시 등록하는 클래스  
+         multipartResolver => 스프링에서 사용중이 id이기 때문에 반드시 대소문자 구분
+         150page 
+    -->
+    <bean id="multipartResolver"
+       class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+</beans>
+
+
+
+
+
+
+
+
+
+
