@@ -29,4 +29,34 @@ public class DataBoardRestController {
 	   }
 	   return result;
    }
+   
+   @PostMapping("databoard/delete_ok.do")
+   // 자바스크립트 , JSON , 일반데이터 전송 사용하는 Controller 
+   public String databoard_delete_ok(int no,String pwd)
+   {
+	   String result=""; // javascript
+	   String db_pwd=dao.databoardGetPassword(no);
+	   if(db_pwd.equals(pwd))
+	   {
+		   result="<script>"
+				 +"location.href=\"list.do\""
+		         +"</script>";
+		   dao.databoardDelete(no);
+	   }
+	   else
+	   {
+		   result="<script>"
+				 +"alert(\"비밀번호가 틀립니다!!\");"
+				 +"history.back();"
+		         +"</script>";
+	   }
+	   return result;
+   }
 }
+
+
+
+
+
+
+

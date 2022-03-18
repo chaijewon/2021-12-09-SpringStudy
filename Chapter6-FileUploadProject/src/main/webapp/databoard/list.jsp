@@ -53,9 +53,10 @@ $(function(){
          <th width=20% class="text-center">작성일</th>
          <th width=10% class="text-center">조회수</th>
         </tr>
+        <c:set var="count" value="${count }"/>
         <c:forEach var="vo" items="${list }" varStatus="s">
            <tr ${s.index%2==1?"class=warning":"" }>
-	         <td width=10% class="text-center">${vo.no }</td>
+	         <td width=10% class="text-center">${count }</td>
 	         <td width=45%><a href="detail.do?no=${vo.no }">${vo.subject }</a>
 	           <c:if test="${vo.dbday==today }">
 	            <sup style="color:red">new</sup>
@@ -65,6 +66,7 @@ $(function(){
 	         <td width=20% class="text-center">${vo.dbday }</td>
 	         <td width=10% class="text-center">${vo.hit }</td>
 	        </tr>
+	        <c:set var="count" value="${count-1 }"/>
         </c:forEach>
       </table>
       <table class="table">

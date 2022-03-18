@@ -19,7 +19,19 @@
         ***@ControllerAdvice, 
         @Configuration
      -->
-    <mvc:annotation-driven/><!-- RedirectAttributes클래스 사용시 -->
+    <!-- RedirectAttributes클래스 사용시 -->
+    <mvc:annotation-driven>
+      <mvc:message-converters>
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+         <property name="supportedMediaTypes">
+           <list>
+             <value>text/html;charset=UTF-8</value>
+           </list>
+         </property>
+        </bean>
+      </mvc:message-converters>
+    </mvc:annotation-driven>
+    
     <!--View Resolver 설정 : JSP(경로명,확장자 입력) -->
     <bean id="viewResolver"
        class="org.springframework.web.servlet.view.InternalResourceViewResolver"

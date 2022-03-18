@@ -62,6 +62,7 @@ h1{
           <td colspan="4" class="text-right">
            <a href="update.do?no=${vo.no }" class="btn btn-sm btn-danger">수정</a>
            <a href="delete.do?no=${vo.no }" class="btn btn-sm btn-info">삭제</a>
+           <%-- .do : @Controller = @RequestMapping : DAO연결  --%>
            <a href="list.do" class="btn btn-sm btn-success">목록</a>
           </td>
         </tr>

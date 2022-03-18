@@ -1,6 +1,7 @@
 package com.sist.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -54,6 +55,9 @@ public interface DataBoardMapper {
 		  +"WHERE no=#{no}")
    public void databoardUpdate(DataBoardVO vo);
    //6. 삭제 => 파일 삭제 
+   @Delete("DELETE FROM spring_databoard "
+		  +"WHERE no=#{no}")
+   public void databoardDelete(int no);
    //7. 검색 => 동적 SQL 
    @Select("SELECT no,subject,name,"
    		  +"TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit "

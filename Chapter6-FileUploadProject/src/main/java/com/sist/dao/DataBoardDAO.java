@@ -64,7 +64,11 @@ public class DataBoardDAO {
    {
 	   mapper.databoardUpdate(vo);
    }
-   //7. 삭제 
+   //7. 삭제
+   public void databoardDelete(int no)
+   {
+	   mapper.databoardDelete(no);
+   }
    //8. 찾기 => 동적 SQL => <if test=""> forEach <when>.... <trim>
    // ${} , #{} 차이점 
    // Procedure 처리 방법 
