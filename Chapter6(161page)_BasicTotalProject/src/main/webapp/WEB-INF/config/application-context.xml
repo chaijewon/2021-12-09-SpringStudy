@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <!-- AOP등록 : 공통으로 적용되는 소스를 모아서 자동 호출 
+         1. 로그파일 , 2. 트랜잭션 , 3. 보안 , 4. 빅데이터 (데이터분석) => R
+     -->
+     <!-- 사용자 정의 클래스 : 패키지 단위로 저장  -->
+     <context:component-scan base-package="com.sist.*"/>
+     <!-- 
+                    메모리 할당 
+          @Component, @Repository, @Service, @Controller, 
+          @RestController, @ControllerAdvice, 
+          @Configuration
+          
+          DI 관련 
+          @Autowired, @PostConstruct, @PreDestroy, @Resource(1.8이하)
+      -->
+     <!-- 
+                    라이브러리 클래스 등록(스프링에서 지원하는 클래스) => ViewReolver
+          = InternalResourceViewResolver (일반)
+          = MultipartResolver (파일 업로드)
+          = TilesView (include없이 화면 조립)
+      -->
+      <bean id="viewResolver"
+         class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+         p:prefix="/"
+         p:suffix=".jsp"
+      />
+  
+</beans>
