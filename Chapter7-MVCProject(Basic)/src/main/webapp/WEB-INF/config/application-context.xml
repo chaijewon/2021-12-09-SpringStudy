@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <!-- 공통모듈 수행 -->
+    <aop:aspectj-autoproxy/><!-- 접속자의 요청사항 , 걸리는 시간 체크(로그파일)  -->
+    <!-- 사용자 정의 클래스 등록 -->
+    <context:component-scan base-package="com.sist"/>
+    <!-- 모든 클래스가 메모리 할당을 하지 않는다 
+                  선택을 한다 (클래스별로 분리)
+         ***@Component, 
+         ***@Repository, 
+         ***@Service, 
+         ***@Controller, 
+         ***@RestController, 
+         @ControllerAdvice, 
+         @Configuration
+     -->
+     <!-- 
+           JSP를 찾기 : ViewResolver
+           => WebApplicationContext
+              1. 사용자 정의 클래스 관리 
+              2. HandlerMapping
+              3. ViewResolver
+           => STS 3.8.4 => XML 
+           => STS 3.9.12 => 속성값을 보여준다 
+           => STS 3.9.12이후 => ctrl+space
+           => STS 4...     => Spring-Boot (Spring => Boot) = JPA
+      -->
+      <bean id="viewResolver"
+         class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+         p:prefix="/"
+         p:suffix=".jsp"
+       />
+</beans>
