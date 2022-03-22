@@ -44,8 +44,44 @@ public interface ReplyBoardMapper {
 		  +"WHERE no=#{no}")
    public void hitIncrement(int no);
    // 4. 답변 : SQL문장 여러개 사용 => 트랜잭션 (XML , Annotation)
+   // 4-1 : no에 해당되는 데이터 읽기 (group_id , group_step,group_tab)
+   // 4-2 : group_step => 증가  => UPDATE
+   // 4-3 : 실제 insert  => INSERT
+   // 4-4 : depth증가  => UPDATE
+   // 비절차 언어 => 에러발생 => 밑에 있는 문장을 수행한다 (단점) 
+   // 일괄 처리  => 4개전체 성공 (COMMIT) , 4개중에 1개라도 실패(Rollback)
+   // 트랜잭션 프로그램 (금융권 , 공기업 => 트랜잭션 처리가 거의 등장)
+   /*
+    *    try
+    *    {
+    *        getConnection()
+    *        SELECT
+    *        UPDATE
+    *        INSERT
+    *        UPDATE
+    *        commit()
+    *    }catch(Exception ex)
+    *    {
+    *        rollback()
+    *    }
+    *    finally
+    *    {
+    *       disConnection()
+    *    }
+    *    
+    *    @Transactional
+    */
    // 5. 삭제 : SQL문장 여러개 사용 => 트랜잭션
    // 6. 수정 
+   @Select("SELECT pwd FROM spring_replyboard "
+		  +"WHERE no=#{no}")
+   public String replyBoardGetPassword(int no);
+   
+   @Update("UPDATE spring_replyboard SET "
+		  +"name=#{name},subject=#{subject},"
+		  +"content=#{content} "
+		  +"WHERE no=#{no}")
+   public void replyBoardUpdate(ReplyBoardVO vo);
    // 7. 찾기 : MyBatis동적 쿼리 작성방법 (XML , Annotation)
 }
 

@@ -104,6 +104,23 @@ public class ReplyBoardController {
 	   return "board/detail";
    }
    
+   @GetMapping("board/update.do")
+   public String board_update(int no,Model model)
+   {
+	   // 데이터베이스 연결 (DAO) => 데이터 읽기
+	   ReplyBoardVO vo=dao.replyBoardUpdateData(no);
+	   // 전송 (update.jsp)
+	   model.addAttribute("vo", vo);
+	   return "board/update";
+   }
+   // detail.jsp => @Controller(no) => reply.jsp
+   @GetMapping("board/reply.do")
+   public String board_reply(int no,Model model)
+   {
+	   model.addAttribute("no", no);
+	   return "board/reply";
+   }
+   
 }
 
 

@@ -2,6 +2,8 @@ package com.sist.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 import com.sist.vo.*;
 import com.sist.mapper.*;
@@ -31,4 +33,33 @@ public class ReplyBoardDAO {
 	   mapper.hitIncrement(no);// 조회수 증가 
 	   return mapper.replyBoardDetailData(no);
    }
+   public ReplyBoardVO replyBoardUpdateData(int no)
+   {
+	   return mapper.replyBoardDetailData(no);
+   }
+   
+   public boolean replyBoardUpdate(ReplyBoardVO vo)
+   {
+	   boolean bCheck=false;
+	   // 비밀번호 검색
+	   String db_pwd=mapper.replyBoardGetPassword(vo.getNo());
+	   if(db_pwd.equals(vo.getPwd()))
+	   {
+		   bCheck=true;
+		   // 실제 수정 
+		   mapper.replyBoardUpdate(vo);
+	   }
+	   else
+	   {
+		   bCheck=false;
+	   }
+	   return bCheck;
+   }
 }
+
+
+
+
+
+
+
