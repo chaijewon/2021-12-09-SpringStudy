@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.board-mapper">
+ <select id="boardListData" resultType="BoardVO">
+   SELECT no,subject,name,regdate,hit
+   FROM project_freeboard
+ </select>
+ <select id="boardFindData" resultType="BoardVO" parameterType="hashmap">
+   SELECT no,subject,name,regdate,hit
+   FROM project_freeboard
+   WHERE
+   <!-- 
+     => name subject
+        subject content
+     WHERE 
+     name LIKE '%'||'%'
+     OR subject LIKE '%'||'%'
+     OR content LIKE '%'||'%'
+    -->
+   <trim prefix="(" suffix=")" prefixOverrides="OR">
+   <!--  앞에 추가 ,   뒤에 추가        앞에 제거  -->
+     <foreach collection="fsArr" item="fd">
+      <trim prefix="OR">
+       <!-- <choose>
+         <when test="fd=='N'.toString()">
+          name LIKE '%'||#{ss}||'%'
+         </when>
+         <when test="fd=='S'.toString()">
+          subject LIKE '%'||#{ss}||'%'
+         </when>
+         <when test="fd=='C'.toString()">
+          content LIKE '%'||#{ss}||'%'
+         </when>
+       </choose>-->
+       <if test="fd=='N'.toString()">
+        name LIKE '%'||#{ss}||'%'
+       </if>
+       <if test="fd=='S'.toString()">
+        subject LIKE '%'||#{ss}||'%'
+       </if>
+       <if test="fd=='C'.toString()">
+        content LIKE '%'||#{ss}||'%'
+       </if>
+       </trim>
+     </foreach>
+   </trim>
+ </select>
+</mapper>
