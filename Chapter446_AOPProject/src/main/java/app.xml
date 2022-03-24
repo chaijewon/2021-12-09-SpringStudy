@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <aop:aspectj-autoproxy/>
+    <!-- 
+        aop => proxy라고 한다 
+               ===== 대리자 
+               
+        class A
+        {
+           public void display()
+           {
+              System.out.println("aaa");
+           }
+        }
+        class Proxy
+        {
+            A a=new A();
+            public Proxy(A a)
+            {
+               this.a=a;
+            }
+            public void display()
+            {
+               System.out.println("Before...") @Before
+               a.display();
+               System.out.println("After...")  @After
+            }
+        }
+        
+        A a=new A();
+        a.display();
+        
+        Proxy p=new Proxy(a);
+        p.display();
+     -->
+     <context:component-scan base-package="com.sist.*"/>
+</beans>
