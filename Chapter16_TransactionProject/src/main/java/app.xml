@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+    <!-- 447page AOP
+                 기존의 코드를 수정하지 않고 원하는 기능을 결합할 수 있게 만들어주는 기능 
+                 용어 설명 : 449page
+         Advice : 메소드 수행 시점 
+         =====================
+         
+         1) Before Advice : 메소드 실행 전에 호출 => 데이터 연결 , 서버 연결 , 파일읽기 
+                                                        자동 로그인 
+         2) After Advice : finally (무조건 호출한다) 
+         3) After-Retruning : 메소드 정상수행이 된 경우 
+         4) After-Throwing : catch절 수행 (에러 처리)
+         5) Around : 실행한 내용 위에 , 아래에 => 두개를 동시에 수행 (트랜잭션)
+         454 => @Before("execution(* 패키지.클래스명.*(..)))
+         <aop:aspectj-autoproxy/> (455page)
+         460 => 에러처리 After-Throwing
+         461 => Around (수행 시간 계산)
+         463 => 스프링에서 트랜잭션 처리 
+     -->
+     <aop:aspectj-autoproxy/>
+     <context:component-scan base-package="com.sist.*"/>
+</beans>
