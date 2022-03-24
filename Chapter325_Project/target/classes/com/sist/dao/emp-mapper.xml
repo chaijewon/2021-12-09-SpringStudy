@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.emp-mapper">
+  <!--  forEach 
+        if , choose (다중조건문) , trim , foreach(in연산자)
+   -->
+   <select id="empGetNameData" resultType="string">
+    SELECT ename FROM emp
+   </select>
+   <select id="empFindData" resultType="EmpVO" parameterType="hashmap">
+    SELECT empno,ename,job,hiredate,sal 
+    FROM emp
+    <!-- 
+       trim 
+                추가  : 앞에 추가 (prefix), 뒤에 추가 (suffix)
+                제거  : 앞 제거(prefixOverrides)   , 뒤 제거 (suffixOverrides)
+        SELECT * FROM emp ==> job OR hiredate
+        WHERE 
+        ename LIKE '%'||'%'
+        OR job LIKE '%'||'%'
+        OR hiredate LIKE '%'||'%'
+     -->
+    <trim prefix="WHERE ename IN(" suffix=")" suffixOverrides=")">
+     <foreach collection="names" item="name" separator="," close=")">
+      #{name}
+     </foreach>
+    </trim>
+   </select>
+</mapper>
