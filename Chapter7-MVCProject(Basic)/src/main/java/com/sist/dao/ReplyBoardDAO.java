@@ -2,6 +2,7 @@ package com.sist.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -54,6 +55,47 @@ public class ReplyBoardDAO {
 		   bCheck=false;
 	   }
 	   return bCheck;
+   }
+   // 답변 
+   @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+   public void replyBoardReplyInsert(int pno,ReplyBoardVO vo)
+   {
+	   ReplyBoardVO pvo=mapper.replyBoardParentInfoData(pno);
+	   mapper.replyGroupStepIncrement(pvo);
+	   vo.setGroup_id(pvo.getGroup_id());
+	   vo.setGroup_step(pvo.getGroup_step()+1);
+	   vo.setGroup_tab(pvo.getGroup_tab()+1);
+	   mapper.replyBoardReplyInsert(vo);
+	   mapper.replyBoardDepthIncrement(pno);
+   }
+   
+   @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+   public boolean replyBoardDelete(int no,String pwd)
+   {
+	   boolean bCheck=false;
+	   // 비밀번호 가지고 오기 
+	   String db_pwd=mapper.replyBoardGetPassword(no);
+	   if(db_pwd.equals(pwd))
+	   {
+		   bCheck=true;
+		   //정보 
+		   ReplyBoardVO vo=mapper.replyBoardGetRootDepth(no);
+		   if(vo.getDepth()==0)// 댓글이 없는 게시물
+		   {
+			   mapper.replyBoardDelete(no);
+		   }
+		   else // 댓글이 있는 게시물 
+		   {
+			   mapper.replySubContUpdate(no);
+		   }
+		   
+		   mapper.replyBoardDepthDecrement(no);
+	   }
+	   return bCheck;
+   }
+   public List<ReplyBoardVO> replyBoardFindData(Map map)
+   {
+	   return mapper.replyBoardFindData(map);
    }
 }
 

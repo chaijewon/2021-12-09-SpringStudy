@@ -1,11 +1,14 @@
 package com.sist.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.sist.vo.*;
+
+import lombok.Delegate;
 public interface ReplyBoardMapper {
    // 기능 
    // 1. 목록출력 => 페이징 
@@ -45,9 +48,28 @@ public interface ReplyBoardMapper {
    public void hitIncrement(int no);
    // 4. 답변 : SQL문장 여러개 사용 => 트랜잭션 (XML , Annotation)
    // 4-1 : no에 해당되는 데이터 읽기 (group_id , group_step,group_tab)
+   @Select("SELECT group_id,group_step,group_tab "
+		  +"FROM spring_replyboard "
+		  +"WHERE no=#{no}")
+   // 상위 게시물  => pno 
+   public ReplyBoardVO replyBoardParentInfoData(int no);
    // 4-2 : group_step => 증가  => UPDATE
+   @Update("UPDATE spring_replyBoard SET "
+		  +"group_step=group_step+1 "
+		  +"WHERE group_id=#{group_id} AND group_step>#{group_step}")
+   public void replyGroupStepIncrement(ReplyBoardVO vo);
    // 4-3 : 실제 insert  => INSERT
+   @Insert("INSERT INTO spring_replyBoard(no,name,subject,content,pwd,"
+		  +"group_id,group_step,group_tab,root) VALUES("
+		  +"sr_no_seq.nextval,#{name},#{subject},#{content},"
+		  +"#{pwd},#{group_id},#{group_step},"
+		  +"#{group_tab},#{root})")
+   public void replyBoardReplyInsert(ReplyBoardVO vo);
    // 4-4 : depth증가  => UPDATE
+   @Update("UPDATE spring_replyBoard SET "
+		  +"depth=depth+1 "
+		  +"WHERE no=#{no}")
+   public void replyBoardDepthIncrement(int no);
    // 비절차 언어 => 에러발생 => 밑에 있는 문장을 수행한다 (단점) 
    // 일괄 처리  => 4개전체 성공 (COMMIT) , 4개중에 1개라도 실패(Rollback)
    // 트랜잭션 프로그램 (금융권 , 공기업 => 트랜잭션 처리가 거의 등장)
@@ -72,6 +94,25 @@ public interface ReplyBoardMapper {
     *    @Transactional
     */
    // 5. 삭제 : SQL문장 여러개 사용 => 트랜잭션
+   // 5-1. 비밀번호 검색 
+   // 5-1-1 .  root,depth가지고 오는 
+   @Select("SELECT root,depth FROM spring_replyboard "
+		  +"WHERE no=#{no}")
+   public ReplyBoardVO replyBoardGetRootDepth(int no);
+   // 5-2. 삭제 / 수정 
+   @Delete("DELETE FROM spring_replyboard "
+		  +"WHERE no=#{no}")
+   public void replyBoardDelete(int no);
+   @Update("UPDATE spring_replyboard SET "
+		  +"subject='관리자가 삭제한 게시물입니다.',"
+		  +"content='관리자가 삭제한 게시물입니다.' "
+		  +"WHERE no=#{no}")
+   public void replySubContUpdate(int no);
+   // 5-3. depth감소
+   @Update("UPDATE spring_replyboard SET "
+		  +"depth=depth-1 "
+		  +"WHERE no=#{no}")
+   public void replyBoardDepthDecrement(int no);
    // 6. 수정 
    @Select("SELECT pwd FROM spring_replyboard "
 		  +"WHERE no=#{no}")
@@ -83,6 +124,40 @@ public interface ReplyBoardMapper {
 		  +"WHERE no=#{no}")
    public void replyBoardUpdate(ReplyBoardVO vo);
    // 7. 찾기 : MyBatis동적 쿼리 작성방법 (XML , Annotation)
+   /*
+    *    WHERE 
+    *      name LIKE '%'||#{ss}||'%'
+    *      subject LIKE '%'||#{ss}||'%'
+    *      content LIKE '%'||#{ss}||'%'
+    *      
+    *      추가  prefix , suffix 
+    *      제거 prefixOverrides  suffixOverrides
+    */
+   @Select("<script>"
+		  +"SELECT no,subject,name,"
+		  +"TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit "
+		  +"FROM spring_replyboard "
+		  +"WHERE "
+		  +"<trim prefixOverrides='OR'>"
+		  +"<foreach collection='fsArr' item='fd'>"
+		  +"<trim prefix='OR'>"
+		  +"<choose>"
+		  +"<when test=\"fd=='N'.toString()\">"
+		  +"name LIKE '%'||#{ss}||'%'"
+		  +"</when>"
+		  +"<when test=\"fd=='S'.toString()\">"
+		  +"subject LIKE '%'||#{ss}||'%'"
+		  +"</when>"
+		  +"<when test=\"fd=='C'.toString()\">"
+		  +"content LIKE '%'||#{ss}||'%'"
+		  +"</when>"
+		  +"</choose>"
+		  +"</trim>"
+		  +"</foreach>"
+		  +"</trim>"
+		  +"</script>"
+		  )
+   public List<ReplyBoardVO> replyBoardFindData(Map map);
 }
 
 

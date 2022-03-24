@@ -49,11 +49,22 @@ td{
          </td>
        </tr>
        <tr>
+        <%--
+              MyBatis의 동적 쿼리
+                => trim , if , choose , foreach  
+              Transaction 
+                => SQL문장을 동시에 수행 (일괄처리) 
+                   ----------------- DML(INSERT,UPDATE,DELETE)
+                => 내용보기 : UPDATE , SELECT 
+                
+                reply : select , update , insert , update
+                delete : select , update ,delete , update
+         --%>
          <td colspan="4" class="text-right">
           <a href="reply.do?no=${vo.no }" class="btn btn-xs btn-success">답변</a>
           <a href="update.do?no=${vo.no }" class="btn btn-xs btn-info">수정</a>
           <%-- .do => DispatcherServlet => @Controller --%>
-          <a href="#" class="btn btn-xs btn-danger">삭제</a>
+          <a href="delete.do?no=${vo.no }" class="btn btn-xs btn-danger">삭제</a>
           <a href="list.do" class="btn btn-xs btn-warning">목록</a>
          </td>
        </tr>

@@ -121,6 +121,43 @@ public class ReplyBoardController {
 	   return "board/reply";
    }
    
+   @PostMapping("board/reply_ok.do")
+   public String board_reply_ok(int pno,ReplyBoardVO vo)
+   {
+	   //DAO연동 
+	   dao.replyBoardReplyInsert(pno, vo);
+	   return "redirect:list.do";
+   }
+   
+   @GetMapping("board/delete.do")
+   public String board_delete(int no,Model model)
+   {
+	   model.addAttribute("no", no);
+	   return "board/delete";
+   }
+   
+   @PostMapping("board/delete_ok.do")
+   public String board_delete_ok(int no,String pwd,Model model)
+   {
+	   System.out.println("no="+no+",pwd="+pwd);
+	   // DataBase연결 
+	   boolean bCheck=dao.replyBoardDelete(no, pwd);
+	   model.addAttribute("bCheck", bCheck);
+	   return "board/delete_ok";
+   }
+   
+   @PostMapping("board/find.do")
+   public String board_find(String[] fs, String ss,Model model)
+   {
+	   //DAO연동 데이터 읽기 
+	   Map map=new HashMap();
+	   map.put("fsArr",fs);
+	   map.put("ss", ss);
+	   List<ReplyBoardVO> list=dao.replyBoardFindData(map);
+	   model.addAttribute("list", list);
+	   return "board/find";
+   }
+   
 }
 
 

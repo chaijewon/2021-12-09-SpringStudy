@@ -29,6 +29,7 @@ h1{
        <th width=10% class="warning text-right">이름</th>
        <td width=90%>
          <input type=text size=20 class="input-sm" name=name>
+         <input type=hidden name=pno value="${no }">
        </td>
       </tr>
       <tr>
