@@ -60,6 +60,7 @@ public class FoodRestController {
 			   obj.put("poster", poster);
 			   if(i==0)
 			   {
+				   
 				   obj.put("curpage", curpage);
 				   obj.put("totalpage", totalpage);
 			   }
@@ -69,6 +70,35 @@ public class FoodRestController {
 			   
 		   }
 		   result=arr.toJSONString();
+	   }catch(Exception ex){}
+	   return result;
+   }
+   // 상세보기 
+   @GetMapping(value="food/detail_vue.do",produces = "text/plain;charset=utf-8")
+   public String food_detail(int no)
+   {
+	   /*
+	    *  no,name,address,tel,score,type,"
+		 +"poster,time,parking,menu
+	    */
+	   String result="";
+	   try
+	   {
+		   FoodVO vo=dao.foodDetailData(no);
+		   // {}
+		   JSONObject obj=new JSONObject();
+		   obj.put("no", vo.getNo());
+		   obj.put("name", vo.getName());
+		   obj.put("address", vo.getAddress());
+		   obj.put("tel", vo.getTel());
+		   obj.put("score", vo.getScore());
+		   obj.put("type", vo.getType());
+		   obj.put("poster", vo.getPoster());
+		   obj.put("time", vo.getTime());
+		   obj.put("parking", vo.getParking());
+		   obj.put("menu", vo.getMenu());
+		   
+		   result=obj.toJSONString();
 	   }catch(Exception ex){}
 	   return result;
    }

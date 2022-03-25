@@ -37,6 +37,7 @@
       </li>
       <li><a href="../food/search.do">맛집검색</a></li>
       <li><a href="../chat/chat.do">실시간채팅</a></li>
+      <li><a href="../movie/movie.do">영화</a></li>
     </ul>
     
   </nav>

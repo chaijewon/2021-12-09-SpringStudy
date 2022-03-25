@@ -36,7 +36,10 @@ public class FoodDAO {
   {
 	  return mapper.foodFindTotalPage(address);
   }
-  
+  public FoodVO foodDetailData(int no)
+  {
+	  return mapper.foodDetailData(no);
+  }
 }
 
 
