@@ -22,6 +22,9 @@
 </head>
 <body>
   <div class="container">
+    <h3 class="text-right">
+     <a href="find.do" class="btn btn-sm btn-info">검색</a>
+    </h3>
     <h3>믿고보는 맛집 리스트</h3>
     <hr>
     <div class="row">
