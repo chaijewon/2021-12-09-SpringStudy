@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <!-- 
+        no NUMBER PRIMARY KEY auto_crement => SELECT ~~
+                                              FROM (SELE~~~)
+                                              
+                                              SELECT ~
+                                              FROM table명 limit ?,?
+     -->
+    <!-- 
+         util = properties
+     -->
+    <util:properties id="db" location="/WEB-INF/config/db.properties"/>
+    <!-- 데이터베이스 정보 저장 : DataSource (구현된 클랫스 : BasicDataSource) 
+                  오라클 = MySQL , MariaDB = driver , username , password , url 
+         @Profile
+    -->
+    <!-- 초기값 => 시작과 동시에 오라클 연결  
+    BasicDataSource = default생성자 호출 
+       new BasicDataSource()
+       <constructor-arg ref="ds" /> 
+       <c:_0> 
+    -->
+    <bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+        p:driverClassName="#{db['driver']}"
+        p:url="#{db['url']}"
+        p:username="#{db['username']}"
+        p:password="#{db['password']}"
+    />
+    <!-- Transaction -->
+    <!-- MyBatis 실행 과정  -->
+    <bean id="dataSource" 
+          class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> 
+      <constructor-arg ref="ds" /> 
+      <property name="logFormatter"> 
+        <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter"> 
+        <property name="loggingType" value="MULTI_LINE" /> 
+        <property name="sqlPrefix" value="SQL : "/> 
+        </bean> 
+      </property> 
+    </bean>
+    <!-- MyBatis 연결 (getConnection,disConnection) -->
+    <bean id="ssf"
+       class="org.mybatis.spring.SqlSessionFactoryBean"
+       p:dataSource-ref="dataSource"
+    />
+    <mybatis-spring:scan base-package="com.sist.mapper"/>
+    <!-- 
+            자바 
+      @MapperScan(base-package={"com.sist.mapper"})
+     -->
+</beans>
+
+
+
+
+
+
+
+
+

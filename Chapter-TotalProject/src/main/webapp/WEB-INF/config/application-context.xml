@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <!-- AOP 설정 -->
+    <aop:aspectj-autoproxy/> <!-- Annotation으로 작업시에  -->
+    <context:component-scan base-package="com.sist.*"/>
+    <!-- 사용자 정의 메모리 할당 
+          @Component, 
+          @Repository, 
+          @Service, 
+          @Controller, 
+          @RestController, 
+          @ControllerAdvice, 
+          @Configuration
+    -->
+    <!-- ViewResolver -->
+    <!-- 
+         p: property : setXxx() => 값을 채워준다 
+         c: constructor() 
+         = setter DI , constructor DI
+         DI (****** 100%) 
+         === 의존성 주입 
+             ===== 객체와 객체의 관계 (스프링에서 객체 관리) => 연결 (조립)
+             
+             1. 포트폴리어 (2개 , 개인) => 이력서 (****) 
+             2. 면접 
+             3. 실무 적응 (Order) 
+     -->
+    <mvc:interceptors>
+      <mvc:interceptor>
+       <mvc:mapping path="/**/*"/><!-- Controller 전체 -->
+       <bean id="commonsLog" class="com.sist.interceptor.CommonsLogIntercepter"/>
+      </mvc:interceptor>
+    </mvc:interceptors>
+    <bean id="viewResolver"
+         class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+         p:prefix="/"
+         p:suffix=".jsp"
+    />
+    <!-- MultipartViewResolver , TilesView  -->
+    <!-- Validation 처리 (유효성 검사 : 사용 입력이 있는 경우) -->
+</beans>
