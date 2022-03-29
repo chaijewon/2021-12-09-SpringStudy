@@ -9,4 +9,6 @@ public interface FoodService {
 	public List<FoodVO> foodFindData(Map map);
 	public List<CategoryVO> categoryListData();
 	public CategoryVO categoryInfoData(int cno);
+	public int foodFindTotalpage(String address);
+	public List<RecipeVO> recipeTypeData(String type);
 }

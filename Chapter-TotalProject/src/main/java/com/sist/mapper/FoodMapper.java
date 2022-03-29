@@ -64,9 +64,18 @@ public interface FoodMapper {
 		  +"FROM food_location "
 		  +"WHERE address LIKE '%'||#{address}||'%')) "
 		  +"WHERE num BETWEEN #{start} AND #{end}")
+   // #{address} => map.get("address")
    public List<FoodVO> foodFindData(Map map);
    
-   
+   @Select("SELECT CEIL(COUNT(*)/12.0) FROM food_location "
+		  +"WHERE address LIKE '%'||#{address}||'%'")
+   public int foodFindTotalpage(String address);
+   // REGEXP_LIKE(title,#{type}) => LIKE(단점 보완)
+   @Select("SELECT no,poster,title,rownum "
+		  +"FROM recipe "
+		  +"WHERE REGEXP_LIKE(title,#{type}) "
+		  +"AND rownum<=7")
+   public List<RecipeVO> recipeTypeData(String type);
    
 }
 

@@ -124,8 +124,17 @@ public class FoodController {
 	   map.put("no", no);
 	   map.put("table_name", "food_house");
 	   FoodVO vo=service.foodDetailData(map);
+	   // 카페 / 디저트  => 카페|디저트
+	   List<RecipeVO> list=service.recipeTypeData(vo.getType().replace("/", "|").replace(" ", "").replace("기타", ""));
 	   model.addAttribute("vo", vo);
+	   model.addAttribute("list", list);
 	   return "food/detail";
+   }
+   
+   @GetMapping("find.do")
+   public String food_find()
+   {
+	   return "food/find";
    }
 }
 

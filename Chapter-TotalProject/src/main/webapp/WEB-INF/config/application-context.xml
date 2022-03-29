@@ -34,12 +34,12 @@
              2. 면접 
              3. 실무 적응 (Order) 
      -->
-    <mvc:interceptors>
+    <!--<mvc:interceptors>
       <mvc:interceptor>
-       <mvc:mapping path="/**/*"/><!-- Controller 전체 -->
+       <mvc:mapping path="/**/*"/>
        <bean id="commonsLog" class="com.sist.interceptor.CommonsLogIntercepter"/>
       </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
     <bean id="viewResolver"
          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
          p:prefix="/"

@@ -27,5 +27,14 @@ public class FoodDAO {
    {
 	   return mapper.foodFindData(map);
    }
+   public int foodFindTotalpage(String address)
+   {
+	   return mapper.foodFindTotalpage(address);
+   }
+   public List<RecipeVO> recipeTypeData(String type)
+   {
+	   return mapper.recipeTypeData(type);
+   }
+   
    
 }
