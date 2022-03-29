@@ -9,7 +9,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
-    <!-- AOP 설정 -->
+    <!-- AOP 설정 
+           자바 : @EnableAspectAutoProxy
+    -->
     <aop:aspectj-autoproxy/> <!-- Annotation으로 작업시에  -->
     <context:component-scan base-package="com.sist.*"/>
     <!-- 사용자 정의 메모리 할당 
