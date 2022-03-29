@@ -3,6 +3,7 @@ import java.util.*;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.sist.vo.*;
 public interface FoodReplyMapper {
@@ -44,6 +45,10 @@ public interface FoodReplyMapper {
    public void replyInsert(FoodReplyVO vo);
    
    //4. 댓글 수정
+   @Update("UPDATE foodReply SET "
+		  +"msg=#{msg} "
+		  +"WHERE no=#{no}")
+   public void replyUpdate(FoodReplyVO vo);
    // 트랜잭션 
    //5. 댓글 삭제
    //6. 댓글 => 댓글 

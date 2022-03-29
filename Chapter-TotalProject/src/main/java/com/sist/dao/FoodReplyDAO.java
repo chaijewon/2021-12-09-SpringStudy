@@ -60,6 +60,11 @@ public class FoodReplyDAO {
     {
     	mapper.replyInsert(vo);
     }
+    
+    public void replyUpdate(FoodReplyVO vo)
+    {
+    	mapper.replyUpdate(vo);
+    }
 }
 
 

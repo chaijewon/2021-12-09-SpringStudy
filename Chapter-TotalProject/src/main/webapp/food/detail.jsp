@@ -7,9 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <style type="text/css">
 .container{
   margin-top: 50px;
@@ -19,6 +16,44 @@
   width:960px;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+let i=0;
+let u=0;
+$(function(){
+	$('.replys').click(function(){
+	    $('.rInsert').hide();
+	    $('.rUpdate').hide();
+		let no=$(this).attr("value");
+		if(i==0)
+		{
+		   $('#m'+no).show();
+		   i=1;
+		}
+		else
+		{
+			$('#'+no).hide();
+			i=0;
+		}
+		
+	})
+	$('.updates').click(function(){
+		$('.rInsert').hide();
+	    $('.rUpdate').hide();
+		let no=$(this).attr("value");
+		if(u==0)
+		{
+		   $('#u'+no).show();
+		   u=1;
+		}
+		else
+		{
+			$('#u'+no).hide();
+			u=0;
+		}
+	})
+})
+</script>
 </head>
 <body>
   <div class="container">
@@ -84,10 +119,10 @@
                   <td class="text-right">
                     <c:if test="${sessionScope.id!=null }">
                      <c:if test="${sessionScope.id==fvo.id }">
-                      <a href="#" class="btn btn-xs btn-info">수정</a>
-                      <a href="#" class="btn btn-xs btn-success">삭제</a>
+                      <span class="btn btn-xs btn-info updates" value="${fvo.no }">수정</span>
+                      <span class="btn btn-xs btn-success">삭제</span>
                      </c:if>
-                     <a href="#" class="btn btn-xs btn-warning">댓글</a>
+                     <span class="btn btn-xs btn-warning replys" value="${fvo.no }">댓글</span>
                     </c:if>
                   </td>
                  </tr>
@@ -97,6 +132,35 @@
                    </td>
                  </tr>
                </table>
+               <%-- 댓글  --%>
+               <table class="table rInsert" id="m${fvo.no }" style="display:none">
+		         <tr>
+		           <td>
+		             <form method="post" action="#">
+		              <input type=hidden name=fno value="${vo.no}">
+		              <textarea rows="6" cols="77" style="float: left" name="msg"></textarea>
+		              <input type=submit value="댓글쓰기" 
+		              style="height: 122px;background-color: blue;color:white;"
+		              >
+		             </form>
+		           </td>
+		         </tr>
+		        </table>
+		        <%-- 수정 --%>
+		        <table class="table rUpdate" id="u${fvo.no }" style="display:none">
+		         <tr>
+		           <td>
+		             <form method="post" action="reply_update.do">
+		              <input type=hidden name=fno value="${vo.no}">
+		              <input type=hidden name=no value="${fvo.no }">
+		              <textarea rows="6" cols="77" style="float: left" name="msg">${fvo.msg }</textarea>
+		              <input type=submit value="수정하기" 
+		              style="height: 122px;background-color: blue;color:white;"
+		              >
+		             </form>
+		           </td>
+		         </tr>
+		        </table>
              </c:forEach>
            </td>
          </tr>
@@ -106,10 +170,13 @@
 	        <table class="table">
 	         <tr>
 	           <td>
-	             <textarea rows="6" cols="77" style="float: left"></textarea>
-	             <input type=submit value="댓글쓰기" 
+	             <form method="post" action="reply_insert.do">
+	              <input type=hidden name=fno value="${vo.no}">
+	              <textarea rows="6" cols="77" style="float: left" name="msg"></textarea>
+	              <input type=submit value="댓글쓰기" 
 	              style="height: 122px;background-color: blue;color:white;"
-	             >
+	              >
+	             </form>
 	           </td>
 	         </tr>
 	        </table>

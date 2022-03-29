@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sist.vo.*;
+import com.sist.dao.FoodReplyDAO;
 import com.sist.service.*;
 // 오라클 데이터를 읽어서 => 요청 처리 => 결과값 전송 
 // JSP
@@ -33,6 +34,8 @@ public class FoodController {
    @Autowired
    private FoodService service;
    
+   @Autowired
+   private FoodReplyDAO dao;
    // 사용자 요청한 주소를 확인 (사용자(브라우저) => 서버(주소))
    // http://localhost:8080/web/food/main.do?no=1 => uri은 ?를 포함하지 않는다 
    @GetMapping("main.do")
@@ -126,8 +129,10 @@ public class FoodController {
 	   FoodVO vo=service.foodDetailData(map);
 	   // 카페 / 디저트  => 카페|디저트
 	   List<RecipeVO> list=service.recipeTypeData(vo.getType().replace("/", "|").replace(" ", "").replace("기타", ""));
+	   List<FoodReplyVO> rList=dao.replyListData(no);
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("list", list);
+	   model.addAttribute("rList", rList);
 	   return "food/detail";
    }
    
