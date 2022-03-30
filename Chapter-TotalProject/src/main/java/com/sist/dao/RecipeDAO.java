@@ -49,5 +49,9 @@ public class RecipeDAO {
    {
 	   return mapper.chefRecipeCount(map);
    }
+   public RecipeDetailVO recipeDetailData(int no)
+   {
+	   return mapper.recipeDetailData(no);
+   }
    
 }

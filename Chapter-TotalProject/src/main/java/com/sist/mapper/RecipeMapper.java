@@ -63,6 +63,11 @@ public interface RecipeMapper {
   @Select("SELECT CEIL(COUNT(*)/20.0) FROM recipe "
 			 +"WHERE chef LIKE '%'||#{chef}||'%' AND title LIKE '%'||#{ss}||'%'")
   public int chefRecipeCount(Map map);
+  
+  // 상세보기 
+  @Select("SELECT * FROM recipe_detail "
+		 +"WHERE no=#{no}")
+  public RecipeDetailVO recipeDetailData(int no);
 }
 
 

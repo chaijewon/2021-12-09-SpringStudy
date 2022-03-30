@@ -212,6 +212,22 @@ public class RecipeController {
 	 * @PostMapping("chef_find.do") public String chef_find(String chef,String ss,
 	 * Model model) { return "food/chef_recipe_list"; }
 	 */
+  @GetMapping("recipe_detail.do")
+  public String recipe_detail(int no,Model model)
+  {
+	  RecipeDetailVO vo=dao.recipeDetailData(no);
+	  String[] make=vo.getFoodmake().split("\n");
+	  for(String s:make)
+	  {
+		  StringTokenizer st=new StringTokenizer(s,"^");
+		  vo.getFList().add(st.nextToken());// 조리법(문자열)
+		  vo.getIList().add(st.nextToken());// 조리법 (이미지)
+	  }
+	  model.addAttribute("vo", vo);
+	  model.addAttribute("fList", vo.getFList());
+	  model.addAttribute("iList", vo.getIList());
+	  return "food/recipe_detail";
+  }
 }
 
 
