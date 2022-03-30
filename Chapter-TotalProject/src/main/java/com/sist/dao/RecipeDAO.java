@@ -32,4 +32,22 @@ public class RecipeDAO {
    {
 	   return mapper.chefTotalPage();
    }
+   
+   public List<RecipeVO> chefRecipeListDataAll(Map map)
+   {
+	   return mapper.chefRecipeListDataAll(map);
+   }
+   public List<RecipeVO> chefRecipeListData(Map map)
+   {
+	   return mapper.chefRecipeListData(map); 
+   }
+   public int chefRecipeCountAll(String chef)
+   {
+	   return mapper.chefRecipeCountAll(chef);
+   }
+   public int chefRecipeCount(Map map)
+   {
+	   return mapper.chefRecipeCount(map);
+   }
+   
 }

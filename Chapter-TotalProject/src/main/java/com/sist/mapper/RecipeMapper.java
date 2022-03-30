@@ -38,6 +38,31 @@ public interface RecipeMapper {
   //4-2. 총페이지 
   @Select("SELECT CEIL(COUNT(*)/20.0) FROM chef")
   public int chefTotalPage();
+  
+  //4-3. 쉐프별로 제작된 레시피 출력 => 동적 쿼리 
+  @Select("SELECT no,poster,chef,title,num "
+		 +"FROM (SELECT no,poster,chef,title,rownum as num "
+		 +"FROM (SELECT /*+ INDEX_ASC(recipe recipe_no_pk)*/ no,poster,chef,title "
+		 +"FROM recipe "
+		 +"WHERE chef LIKE '%'||#{chef}||'%')) "
+		 +"WHERE num BETWEEN #{start} AND #{end}")
+  public List<RecipeVO> chefRecipeListDataAll(Map map);
+  
+  @Select("SELECT no,poster,chef,title,num "
+			 +"FROM (SELECT no,poster,chef,title,rownum as num "
+			 +"FROM (SELECT /*+ INDEX_ASC(recipe recipe_no_pk)*/ no,poster,chef,title "
+			 +"FROM recipe "
+			 +"WHERE chef LIKE '%'||#{chef}||'%' AND title LIKE '%'||#{ss}||'%')) "
+			 +"WHERE num BETWEEN #{start} AND #{end}")
+  public List<RecipeVO> chefRecipeListData(Map map);
+  
+  @Select("SELECT CEIL(COUNT(*)/20.0) FROM recipe "
+		 +"WHERE chef LIKE '%'||#{chef}||'%'")
+  public int chefRecipeCountAll(String chef);
+  
+  @Select("SELECT CEIL(COUNT(*)/20.0) FROM recipe "
+			 +"WHERE chef LIKE '%'||#{chef}||'%' AND title LIKE '%'||#{ss}||'%'")
+  public int chefRecipeCount(Map map);
 }
 
 

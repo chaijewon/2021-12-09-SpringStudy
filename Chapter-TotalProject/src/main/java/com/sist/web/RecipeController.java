@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sist.vo.*;
@@ -81,9 +82,9 @@ public class RecipeController {
 	  for(RecipeVO vo:list)
 	  {
 		  String title=vo.getTitle();
-		  if(title.length()>18)
+		  if(title.length()>20)
 		  {
-			  title=title.substring(0,18)+"...";
+			  title=title.substring(0,20)+"...";
 		  }
 		  vo.setTitle(title);
 	  }
@@ -140,6 +141,77 @@ public class RecipeController {
 	  model.addAttribute("endPage", endPage);
 	  return "food/chef";
   }
+  // DAO => 오라클 연동 (데이터를 묶어서 전송 => VO)
+  // 데이터 전송 , 요청값 => Controller 
+  // 화면 출력 => JSP
+  // chef_recipe_list.do?chef=${vo.chef }
+  @RequestMapping("chef_recipe_list.do")
+  public String chef_recipe_list(String ss,String page,String chef,Model model)
+  {
+	  if(ss==null)
+		  ss="all";
+	  if(page==null)
+		  page="1"; //default page 
+	  int curpage=Integer.parseInt(page);
+	  Map map=new HashMap();
+	  int rowSize=20;
+	  int start=(rowSize*curpage)-(rowSize-1);
+	  int end=rowSize*curpage;
+	  map.put("start", start);
+	  map.put("end", end);
+	  map.put("chef", chef);
+	  map.put("ss",ss);
+	  List<RecipeVO> list=new ArrayList<RecipeVO>();
+	  
+	  if(ss.equals("all"))
+	  {
+	     list=dao.chefRecipeListDataAll(map);
+	  }
+	  else
+	  {
+		 list=dao.chefRecipeListData(map);
+	  }
+	  // 글자수 조절 
+	  for(RecipeVO vo:list)
+	  {
+		  String title=vo.getTitle();
+		  if(title.length()>20)
+		  {
+			  title=title.substring(0,20)+"...";
+		  }
+		  vo.setTitle(title);
+	  }
+	  int totalpage=0;
+	  if(ss.equals("all"))
+	  {
+	     totalpage=dao.chefRecipeCountAll(chef);
+	  }
+	  else
+	  {
+		 totalpage=dao.chefRecipeCount(map);
+	  }
+	  
+	  // 블록 
+	  final int BLOCK=10;
+	  int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+	  int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
+	  if(endPage>totalpage)
+		  endPage=totalpage;
+	  
+	  // JSP 전송 
+	  model.addAttribute("curpage", curpage);
+	  model.addAttribute("totalpage", totalpage);
+	  model.addAttribute("list", list);
+	  model.addAttribute("startPage", startPage);
+	  model.addAttribute("endPage", endPage);
+	  model.addAttribute("chef", chef);
+	  return "food/chef_recipe_list";
+  }
+  
+	/*
+	 * @PostMapping("chef_find.do") public String chef_find(String chef,String ss,
+	 * Model model) { return "food/chef_recipe_list"; }
+	 */
 }
 
 

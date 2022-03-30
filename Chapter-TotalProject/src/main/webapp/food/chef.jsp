@@ -55,6 +55,28 @@
        </tr>
      </table>
     </div>
+    <div class="row">
+      <div class="text-center">
+        <ul class="pagination">
+         <%-- startPage => 1,11,21... --%>
+         <c:if test="${startPage>1 }">
+          <li><a href="chef.do?page=${startPage-1}">&lt;</a></li>
+         </c:if>
+         <c:forEach var="i" begin="${startPage }" end="${endPage }">
+           <c:if test="${curpage==i }">
+            <c:set var="style" value="class=active"/>
+           </c:if>
+           <c:if test="${curpage!=i }">
+            <c:set var="style" value=""/>
+           </c:if>
+           <li ${style }><a href="chef.do?page=${i }">${i }</a></li>
+         </c:forEach>
+         <c:if test="${endPage<totalpage }">
+          <li><a href="chef.do?page=${endPage+1 }">&gt;</a></li>
+         </c:if>
+		</ul>
+      </div>
+    </div>
    </div>
 </body>
 </html>
