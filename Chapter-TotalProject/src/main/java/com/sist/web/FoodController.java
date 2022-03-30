@@ -133,6 +133,7 @@ public class FoodController {
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("list", list);
 	   model.addAttribute("rList", rList);
+	   model.addAttribute("msg", "관리자가 삭제한 댓글입니다");
 	   return "food/detail";
    }
    
