@@ -26,6 +26,18 @@ public interface RecipeMapper {
   //3. 레시피의 총갯수 
   @Select("SELECT COUNT(*) FROM recipe")
   public int recipeCount();
+  
+  //4. chef 
+  //4-1. chef => 페이징
+  @Select("SELECT poster,chef,mem_cont1,mem_cont2,mem_cont3,mem_cont7,num "
+		 +"FROM (SELECT poster,chef,mem_cont1,mem_cont2,mem_cont3,mem_cont7,rownum as num "
+		 +"FROM (SELECT poster,chef,mem_cont1,mem_cont2,mem_cont3,mem_cont7 "
+		 +"FROM chef ORDER BY mem_cont3 DESC)) "
+		 +"WHERE num BETWEEN #{start} AND #{end}")
+  public List<ChefVO> chefListData(Map map);
+  //4-2. 총페이지 
+  @Select("SELECT CEIL(COUNT(*)/20.0) FROM chef")
+  public int chefTotalPage();
 }
 
 

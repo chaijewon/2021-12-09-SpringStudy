@@ -29,13 +29,35 @@
 		      <a href="#">
 		        <img src="${vo.poster }" alt="Lights" style="width:230px;height:180px">
 		        <div class="caption">
-		          <p style="font-size: 8px">${vo.title }</p>
-		          <p style="font-size: 8px">By&nbsp;${vo.chef }</p>
+		          <p style="font-size: 9px">${vo.title }</p>
+		          <p style="font-size: 9px">By&nbsp;${vo.chef }</p>
 		        </div>
 		      </a>
 		    </div>
 		  </div>
       </c:forEach>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <ul class="pagination">
+         <%-- startPage => 1,11,21... --%>
+         <c:if test="${startPage>1 }">
+          <li><a href="recipe.do?page=${startPage-1}">&lt;</a></li>
+         </c:if>
+         <c:forEach var="i" begin="${startPage }" end="${endPage }">
+           <c:if test="${curpage==i }">
+            <c:set var="style" value="class=active"/>
+           </c:if>
+           <c:if test="${curpage!=i }">
+            <c:set var="style" value=""/>
+           </c:if>
+           <li ${style }><a href="recipe.do?page=${i }">${i }</a></li>
+         </c:forEach>
+         <c:if test="${endPage<totalpage }">
+          <li><a href="recipe.do?page=${endPage+1 }">&gt;</a></li>
+         </c:if>
+		</ul>
+      </div>
     </div>
   </div>
 </body>
