@@ -26,6 +26,11 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
+		<!-- 
+		   <url-pattern>/</url-pattern>
+		   
+		   @RequestMapping("/detail")
+		 -->
 	</servlet-mapping>
 	<!-- 한글 변환  -->
 	<filter>
