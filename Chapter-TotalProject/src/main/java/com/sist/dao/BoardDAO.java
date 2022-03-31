@@ -49,6 +49,19 @@ public class BoardDAO {
    {
 	   return mapper.boardListData(map);
    }
+   public int boardTotalPage()
+   {
+	   return mapper.boardTotalPage();
+   }
+   public void boardInsert(BoardVO vo)
+   {
+	   mapper.boardInsert(vo);
+   }
+   public BoardVO boardDetailData(int no)
+   {
+	   mapper.boardHitIncrement(no);
+	   return mapper.boardDetailData(no);
+   }
 }
 
 
