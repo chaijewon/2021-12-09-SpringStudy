@@ -50,7 +50,8 @@
      <table class="table">
       <c:forTokens items="${vo.etc }" delims="," var="data">
        <tr>
-        <td>${data }</td>
+        <%-- Controller  --%>
+        <td><a href="recipe_goods_list.do?data=${data }">${data }</a></td>
       </tr>
       </c:forTokens>
      </table>

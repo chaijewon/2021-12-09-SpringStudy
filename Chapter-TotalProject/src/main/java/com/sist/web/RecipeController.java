@@ -145,7 +145,7 @@ public class RecipeController {
   // 데이터 전송 , 요청값 => Controller 
   // 화면 출력 => JSP
   // chef_recipe_list.do?chef=${vo.chef }
-  @RequestMapping("chef_recipe_list.do")
+  @RequestMapping("chef_recipe_list.do") //찾기(post) , 페이지 (get)
   public String chef_recipe_list(String ss,String page,String chef,Model model)
   {
 	  if(ss==null)
@@ -227,6 +227,16 @@ public class RecipeController {
 	  model.addAttribute("fList", vo.getFList());
 	  model.addAttribute("iList", vo.getIList());
 	  return "food/recipe_detail";
+  }
+  
+  @GetMapping("recipe_goods_list.do")
+  public String recipe_goods_list(String data,Model model)
+  {
+	  // DAO연동 
+	  data=data.substring(0,data.indexOf(" "));
+	  List<GoodsVO> list=dao.goodsTopData(data);
+	  model.addAttribute("list", list);
+	  return "food/goods_list";
   }
 }
 

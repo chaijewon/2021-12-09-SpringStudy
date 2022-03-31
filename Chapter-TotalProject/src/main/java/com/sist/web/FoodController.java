@@ -1,17 +1,21 @@
 package com.sist.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sist.vo.*;
 import com.sist.dao.FoodReplyDAO;
@@ -36,16 +40,28 @@ public class FoodController {
    
    @Autowired
    private FoodReplyDAO dao;
+   
+   //private String today;
+   private HttpSession session;
    // 사용자 요청한 주소를 확인 (사용자(브라우저) => 서버(주소))
    // http://localhost:8080/web/food/main.do?no=1 => uri은 ?를 포함하지 않는다 
    @GetMapping("main.do")
-   public String food_main(Model model)
+   public String food_main(Model model,HttpSession session)
    {
+	  this.session=session;
 	   // request,response는 사용하지 않고 동작이 가능 
 	   // 사용자가 보내준 값은 : 매개변수를 이용한다 
 	   // 전송 : 전송객체 (Model)
 	   List<CategoryVO> list=service.categoryListData();
 	   model.addAttribute("list", list); //model => request가 포함 
+	   
+	   
+	   /*JobKey jobKey = new JobKey("wordCloudJob");
+	   Scheduled scheduler = schedulerBean.getScheduler();
+	   scheduler.triggerJob(jobKey);*/
+	   /*
+	    *   
+	    */
 	   // request.setAttribute()
 	   return "food/main"; //jsp는 포함하면 안된다 => ViewName
    }
@@ -142,6 +158,76 @@ public class FoodController {
    {
 	   return "food/find";
    }
+   
+  /* @Scheduled(cron="0/3 * * * * *")
+   public void myScheduled() throws Exception
+   {
+	   
+	   String today=new SimpleDateFormat("hh:mm:ss").format(new Date());
+	   System.out.println(today+":Hello Spring!!");
+	   session.setAttribute("today", today);
+	   
+   }*/
+   /*
+    *  스케쥴링 할 메소드위에 @scheduled 어노테이션을 입력한 후에 시간설정하면 끝
+		시간 설정 @scheduled(cron=" ")  * 리눅스 crontab 과 같은 설정방법
+		<예제>
+		   @Scheduled(cron="0 0 05 * * ?") = 매일 5시에 실행
+		   @Scheduled(cron="0 0 02 2,20 * ?") = 매월 2일,20일 새벽2시에 실행
+		***********************************************************************
+		 ---  cron 양식 ---
+		 -초 0-59 , - * / 
+		 -분 0-59 , - * / 
+		 -시 0-23 , - * / 
+		 -일 1-31 , - * ? / L W
+		 -월 1-12 or JAN-DEC , - * / 
+		 -요일 1-7 or SUN-SAT , - * ? / L # 
+		 -년(옵션) 1970-2099 , - * /
+		
+		* : 모든 값
+		? : 특정 값 없음
+		- : 범위 지정에 사용
+		, : 여러 값 지정 구분에 사용
+		/ : 초기값과 증가치 설정에 사용
+		L : 지정할 수 있는 범위의 마지막 값
+		W : 월~금요일 또는 가장 가까운 월/금요일
+		# : 몇 번째 무슨 요일 2#1 => 첫 번째 월요일
+		
+		초 분 시 일 월 주(년)
+		 "0 0 12 * * ?" : 아무 요일, 매월, 매일 12:00:00
+		 "0 15 10 ? * *" : 모든 요일, 매월, 아무 날이나 10:15:00 
+		 "0 15 10 * * ?" : 아무 요일, 매월, 매일 10:15:00 
+		 "0 15 10 * * ? *" : 모든 연도, 아무 요일, 매월, 매일 10:15 
+		 "0 15 10 * * ? : 2005" 2005년 아무 요일이나 매월, 매일 10:15 
+		 "0 * 14 * * ?" : 아무 요일, 매월, 매일, 14시 매분 0초 
+		 "0 0/5 14 * * ?" : 아무 요일, 매월, 매일, 14시 매 5분마다 0초 
+		 "0 0/5 14,18 * * ?" : 아무 요일, 매월, 매일, 14시, 18시 매 5분마다 0초 
+		 "0 0-5 14 * * ?" : 아무 요일, 매월, 매일, 14:00 부터 매 14:05까지 매 분 0초 
+		 "0 10,44 14 ? 3 WED" : 3월의 매 주 수요일, 아무 날짜나 14:10:00, 14:44:00 
+		 "0 15 10 ? * MON-FRI" : 월~금, 매월, 아무 날이나 10:15:00 
+		 "0 15 10 15 * ?" : 아무 요일, 매월 15일 10:15:00 
+		 "0 15 10 L * ?" : 아무 요일, 매월 마지막 날 10:15:00 
+		 "0 15 10 ? * 6L" : 매월 마지막 금요일 아무 날이나 10:15:00 
+		 "0 15 10 ? * 6L 2002-2005" : 2002년부터 2005년까지 매월 마지막 금요일 아무 날이나 10:15:00 
+		 "0 15 10 ? * 6#3" : 매월 3번째 금요일 아무 날이나 10:15:00
+		
+		리눅스의 Cron 예제
+		예) 40 3 * * * root /home/mysql/mysql_backup.sh
+		맨 앞의 40은 40분을 의미함 (분을 의미:0~59)
+		그 뒤의 3은 03시를 의미함 (시를 의미:0~23)
+		그 뒤의 * 은 매일을 의미함 (일을 의미:1~31)
+		그 뒤의 * 은 매월을 의미함 (월을 의미:1~12)
+		그 뒤의 * 은 매주를 의미함(요일을 의미 1:월요일~7:일용일)
+		그 뒤의 root /home/mysql/mysql_backup.sh 는 root  계정으로 mysql_backup.sh을 실행하라는 의미
+		문자 : 각 필드에 해당하는 모든 숫자를 의미
+		문자 : 각 필드자리에 하이픈 문자가 올수 있음
+		ex) 일 필드자리에 11-15 (11,12,13,14,15일을 의미)
+		문자 : 각 필드자리에 콤마문자가 올수 있음
+		ex) 일 필드자리에 1,11,21 (1일,11일 21일을 의미)
+		1/2000 초 설정법
+		@Scheduled(fixedDelay=2000)
+		
+    */
 }
 
 

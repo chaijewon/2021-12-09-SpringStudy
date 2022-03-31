@@ -53,5 +53,9 @@ public class RecipeDAO {
    {
 	   return mapper.recipeDetailData(no);
    }
+   public List<GoodsVO> goodsTopData(String product_name)
+   {
+	   return mapper.goodsTopData(product_name);
+   }
    
 }
