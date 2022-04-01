@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <!-- aop적용 -->
+    <aop:aspectj-autoproxy/>
+    <!-- 
+                 모든 프로그램은 2개만 존재
+        =======================
+          1. 공통으로 사용되는 부분(반복 코딩) => 공통관심사 (중복적인 부분늘 모아서 필요시마다 재사용을  한다)
+        =======================
+          2. 핵심적인 기능 부분 => 핵심관심사 (스프링은 핵심만 코딩한다) 
+        =======================
+        log파일 , 트랜잭션 , 보안 (스프링에서 제작)
+                빅데이터 / AI  => 인터셉트 
+                 시점(JoinPoint) + 메소드(PointCut)
+                         메소드안에 시점이 5군데 
+            @Before , @After , @AfterThrowing , @AfterReturning
+            @Around
+            execution(* 패키지명.클래스명.*(..))
+                     ===              ==
+                     return          모든 메소드 (..) 매개변수0개 이상  
+         1. 프록시패턴을 이용한다 (대리자) => target => 
+            AOP에 등록된 메소드를 합쳐준다 (위빙)  
+            
+         class A
+         {
+            public void display()
+            {
+            }
+         }       
+         class Proxy
+         {
+             A a=new A()
+             public void display()
+             {
+                @Before가 있는 경우
+                System.out.println("")
+                a.display();
+             }
+         }   
+     -->
+     <!-- 사용자 정의 클래스 메모리 할당 -->
+     <context:component-scan base-package="com.sist.*"/>
+     <!-- ViewResolver적용
+          Tiles , MultipartResolver 
+      -->
+     <bean id="tilesConfigurer" 
+        class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+        p:definitions="/WEB-INF/tiles.xml"
+     />
+     <bean id="tilesViewResolver"
+       class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+       p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"
+       p:order="0"
+     />
+     <!-- Ajax , ReactJS @RestContoller 
+          recipe/list  */*
+          recipe/chef/list  */*/*
+          main , list
+     -->
+     <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+        p:prefix="/"
+        p:suffix=".jsp"
+        p:order="1"
+      />
+</beans>
+
+
