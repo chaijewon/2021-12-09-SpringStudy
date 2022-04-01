@@ -50,6 +50,11 @@ public interface BoardMapper {
   @Delete("DELETE FROM project_freeboard "
 		 +"WHERE no=#{no}")
   public void boardDelete(int no);
+  
+  @Update("UPDATE project_freeboard SET "
+		 +"name=#{name},subject=#{subject},content=#{content} "
+		 +"WHERE no=#{no}")
+  public void boardUpdate(BoardVO vo);
 }
 
 

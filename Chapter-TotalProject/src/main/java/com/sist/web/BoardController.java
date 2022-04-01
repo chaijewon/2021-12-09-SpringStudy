@@ -71,6 +71,13 @@ public class BoardController {
 	   return "food/board_delete";
    }
    
+   @GetMapping("food/board_update.do")
+   public String food_board_update(int no, Model model)
+   {
+	   model.addAttribute("no", no);
+	   return "food/board_update";
+   }
+   
 }
 
 

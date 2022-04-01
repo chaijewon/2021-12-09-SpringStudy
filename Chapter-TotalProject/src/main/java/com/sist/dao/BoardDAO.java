@@ -79,6 +79,23 @@ public class BoardDAO {
 	   }
 	   return bCheck;
    }
+   
+   public BoardVO boardUpdateData(int no)
+   {
+	   return mapper.boardDetailData(no);
+   }
+   
+   public boolean boardUpdate(BoardVO vo)
+   {
+	   boolean bCheck=false;
+	   String db_pwd=mapper.boardGetPassword(vo.getNo());
+	   if(db_pwd.equals(vo.getPwd()))
+	   {
+		   bCheck=true;
+		   mapper.boardUpdate(vo);
+	   }
+	   return bCheck;
+   }
 }
 
 

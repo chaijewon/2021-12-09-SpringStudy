@@ -106,6 +106,41 @@ public class BoardRestController {
 	   }
 	   return result;
    }
+   
+   @GetMapping(value = "food/board_update_vue.do",produces = "text/plain;charset=utf-8")
+   public String food_board_update_vue(int no)
+   {
+	   String result="";
+	   try
+	   {
+		   BoardVO vo=dao.boardUpdateData(no);
+		   // vo => {} (JSONObject)
+		   JSONObject obj=new JSONObject();
+		   obj.put("name", vo.getName());
+		   obj.put("subject", vo.getSubject());
+		   obj.put("content", vo.getContent());
+		   
+		   result=obj.toJSONString();
+	   }catch(Exception ex){}
+	   return result;
+   }
+   
+   @GetMapping(value = "food/update_ok_vue.do",produces = "text/plain;charset=utf-8")
+   public String food_update_ok_vue(BoardVO vo)
+   {
+	   String result="";
+	   // DB 처리 
+	   boolean bCheck=dao.boardUpdate(vo);
+	   if(bCheck==true)
+	   {
+		   result="YES";
+	   }
+	   else
+	   {
+		   result="NO";
+	   }
+	   return result;
+   }
 }
 
 
