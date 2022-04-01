@@ -62,6 +62,23 @@ public class BoardDAO {
 	   mapper.boardHitIncrement(no);
 	   return mapper.boardDetailData(no);
    }
+   public boolean boardDelete(int no,String pwd)
+   {
+	   boolean bCheck=false;
+	   String db_pwd=mapper.boardGetPassword(no);//오라클에 저장 비밀번호 읽기
+	   if(db_pwd.equals(pwd))
+	   {
+		   // 삭제 
+		   bCheck=true;
+		   mapper.boardDelete(no);
+	   }
+	   else
+	   {
+		   // 비밀번호가 틀린 상태 
+		   bCheck=false;
+	   }
+	   return bCheck;
+   }
 }
 
 

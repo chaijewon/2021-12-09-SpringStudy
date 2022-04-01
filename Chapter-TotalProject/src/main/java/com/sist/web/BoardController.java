@@ -52,8 +52,23 @@ public class BoardController {
    @GetMapping("food/board_detail.do")
    public String food_detail(int no,Model model)
    {
+	   
 	   model.addAttribute("no", no);
 	   return "food/board_detail";
+   }
+   /*
+    *   <a> , location.href="" , sendRedirect  => GET
+    *   <form> = POST
+    *   -------------------- @RequestMapping(GET/POST) 
+    *   버전변경 => 프로그래머의 요구사항 
+    */
+   @GetMapping("food/board_delete.do")
+   public String food_board_delete(int no, Model model)
+   {
+	   model.addAttribute("no", no); // spring = vuejs , reactjs 
+	   // 스프링 : 요청처리 (@RestController) , 화면 변경 (@Controller)
+	   // 스프링 : 요청 처리  ===> Front (Router)
+	   return "food/board_delete";
    }
    
 }

@@ -1,6 +1,7 @@
 package com.sist.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
@@ -43,6 +44,12 @@ public interface BoardMapper {
   // 데이터 분석(데이터마이닝 => 형태소분석)  => API (꼬꼬마)
   // 수정 : UPDATE사용법  @Select @Update
   // 삭제 : DELETE사용법  @Select @Delete 
+  @Select("SELECT pwd FROM project_freeboard "
+		 +"WHERE no=#{no}")
+  public String boardGetPassword(int no);
+  @Delete("DELETE FROM project_freeboard "
+		 +"WHERE no=#{no}")
+  public void boardDelete(int no);
 }
 
 

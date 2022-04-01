@@ -1,9 +1,12 @@
 package com.sist.web;
-
+// 메소드 ==> 자주사용하면 (승격=연산자)
+// malloc() => new 
+// free()  => delete => gc
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 import com.sist.vo.*;
@@ -83,6 +86,24 @@ public class BoardRestController {
 		   result=obj.toJSONString();
 		   System.out.println(result);
 	   }catch(Exception ex){}
+	   return result;
+   }
+   @GetMapping(value = "food/board_delete_ok.do",produces = "text/plain;charset=utf-8")
+   public String board_delete(int no,String pwd)
+   {
+	   String result="";
+	   //DB => 데이터 전송  => then(function(res))
+	   boolean bCheck=dao.boardDelete(no, pwd);
+	   if(bCheck==true)
+	   {
+		   // 삭제 완료
+		   result="YES";
+	   }
+	   else
+	   {
+		   // 비밀번호가 틀린 상태
+		   result="NO";
+	   }
 	   return result;
    }
 }
