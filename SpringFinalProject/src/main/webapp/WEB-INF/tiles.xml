@@ -12,7 +12,7 @@
   <!-- 
         return "board/list"
    -->
-  <definition name="*/*">
-    <put-attribute name="content" value="/WEB_INF/{1}/{2}.jsp"></put-attribute>
+  <definition name="*/*" extends="main">
+    <put-attribute name="content" value="/WEB-INF/{1}/{2}.jsp"></put-attribute>
   </definition>
 </tiles-definitions>

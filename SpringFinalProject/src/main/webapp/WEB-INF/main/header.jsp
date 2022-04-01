@@ -19,7 +19,7 @@
         <li class="active"><a href="../main/main.do">Home</a></li>
         <li><a class="drop" href="#">Recipe</a>
           <ul>
-            <li><a href="#">레시피 목록</a></li>
+            <li><a href="../recipe/list.do">레시피 목록</a></li>
             <li><a href="#">추천 레시피</a></li>
             <li><a href="#">레시피 제작</a></li>
             <li><a href="#">레시피 검색</a></li>
