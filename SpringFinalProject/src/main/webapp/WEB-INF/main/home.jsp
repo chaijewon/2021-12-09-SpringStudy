@@ -12,8 +12,8 @@
     <!-- ################################################################################################ -->
     <div class="flexslider basicslider">
       <ul class="slides">
-        <li><img src="../images/demo/slides/01.png" alt="">
-          <div class="txtoverlay">
+        <li><img src="../images/demo/slides/01.jpg" alt="" style="width:1950px;height: 650px">
+          <%-- <div class="txtoverlay">
             <div class="centralise">
               <div class="verticalwrap">
                 <article>
@@ -22,10 +22,10 @@
                 </article>
               </div>
             </div>
-          </div>
+          </div>--%>
         </li>
-        <li><img src="../images/demo/slides/02.png" alt="">
-          <div class="txtoverlay">
+        <li><img src="../images/demo/slides/02.jpg" alt="" style="width:1950px;height: 650px">
+          <%--<div class="txtoverlay">
             <div class="centralise">
               <div class="verticalwrap">
                 <article>
@@ -34,10 +34,10 @@
                 </article>
               </div>
             </div>
-          </div>
+          </div>--%>
         </li>
-        <li><img src="../images/demo/slides/03.png" alt="">
-          <div class="txtoverlay">
+        <li><img src="../images/demo/slides/03.jpg" alt="" style="width:1950px;height: 650px">
+          <%--<div class="txtoverlay">
             <div class="centralise">
               <div class="verticalwrap">
                 <article>
@@ -46,7 +46,7 @@
                 </article>
               </div>
             </div>
-          </div>
+          </div>--%>
         </li>
       </ul>
     </div>

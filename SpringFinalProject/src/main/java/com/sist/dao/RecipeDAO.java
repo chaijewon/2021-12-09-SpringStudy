@@ -39,6 +39,10 @@ public class RecipeDAO {
    {
 	   return mapper.recipeTotalPage();
    }
+   public RecipeDetailVO recipeDetailData(int no)
+   {
+	   return mapper.recipeDetailData(no);
+   }
 }
 
 

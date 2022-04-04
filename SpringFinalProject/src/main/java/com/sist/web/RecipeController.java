@@ -56,6 +56,28 @@ public class RecipeController {
 	  // Cookie값 전송 
 	  return "recipe/list";
   }
+  // 조건 ==> 라이브러리 => 안에 코딩이 불가능 (컴파일된 파일만 보내준다) 
+  // 읽어 갈 수 있는 소스 코딩 => 형식 => String
+  @GetMapping("recipe/detail.do")
+  public String recipe_detail(int no,Model model)
+  {
+	  // */* => /WEB-INF/recipe/detail.jsp => include (tiles는 include를 포함한다)
+	  RecipeDetailVO vo=dao.recipeDetailData(no);
+	  List<String> mList=new ArrayList<String>();
+	  List<String> pList=new ArrayList<String>();
+	  String[] data=vo.getFoodmake().split("\n");
+	  for(String s:data)
+	  {
+		  StringTokenizer st=new StringTokenizer(s,"^");
+		  mList.add(st.nextToken());
+		  pList.add(st.nextToken());
+	  }
+	  
+	  model.addAttribute("mList", mList);
+	  model.addAttribute("pList", pList);
+	  model.addAttribute("vo", vo);
+	  return "recipe/detail";
+  }
 }
 
 

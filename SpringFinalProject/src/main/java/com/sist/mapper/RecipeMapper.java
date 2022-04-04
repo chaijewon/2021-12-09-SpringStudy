@@ -17,4 +17,9 @@ public interface RecipeMapper {
   // 총페이지 구하기 
   @Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe")
   public int recipeTotalPage();
+  
+  // 상세 보기 
+  @Select("SELECT * FROM recipe_detail "
+		 +"WHERE no=#{no}")
+  public RecipeDetailVO recipeDetailData(int no);
 }

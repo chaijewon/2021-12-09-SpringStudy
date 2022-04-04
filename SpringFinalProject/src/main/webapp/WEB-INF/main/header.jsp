@@ -28,16 +28,16 @@
         </li>
         <li><a class="drop" href="#">맛집</a>
           <ul>
-            <li><a href="#">맛집목록</a></li>
+            <li><a href="../food/list.do">맛집목록</a></li>
             <li><a href="#">맛집찾기</a></li>
             <li><a href="#">맛집추천</a></li>
           </ul>
         </li>
         <li><a class="drop" href="#">커뮤니티</a>
           <ul>
-            <li><a href="#">자유게시판</a></li>
-            <li><a href="#">묻고답하기</a></li>
-            <li><a href="#">실시간 상담</a></li>
+            <li><a href="../board/list.do">자유게시판</a></li>
+            <li><a href="../reply/list.do">묻고답하기</a></li>
+            <li><a href="../chat/chat.do">실시간 상담</a></li>
           </ul>
         </li>
         <li><a href="#">재료가격비교</a></li>
