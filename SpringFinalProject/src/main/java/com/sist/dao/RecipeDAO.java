@@ -43,6 +43,15 @@ public class RecipeDAO {
    {
 	   return mapper.recipeDetailData(no);
    }
+   
+   public List<ChefVO> chefListData(Map map)
+   {
+	   return mapper.chefListData(map);
+   }
+   public int chefTotalPage()
+   {
+	   return mapper.chefTotalPage();
+   }
 }
 
 

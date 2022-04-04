@@ -21,5 +21,15 @@ public interface RecipeMapper {
   // 상세 보기 
   @Select("SELECT * FROM recipe_detail "
 		 +"WHERE no=#{no}")
-  public RecipeDetailVO recipeDetailData(int no);
+  public RecipeDetailVO recipeDetailData(int no); // recipe,chef => mapper => service
+  // Chef 목록 출력 
+  @Select("SELECT chef,poster,num "
+		 +"FROM (SELECT chef,poster,rownum as num "
+		 +"FROM (SELECT chef,poster "
+		 +"FROM chef ORDER BY mem_cont1 DESC)) "
+		 +"WHERE num BETWEEN #{start} AND #{end}")
+  public List<ChefVO> chefListData(Map map);
+  
+  @Select("SELECT CEIL(COUNT(*)/12.0) FROM chef")
+  public int chefTotalPage();
 }

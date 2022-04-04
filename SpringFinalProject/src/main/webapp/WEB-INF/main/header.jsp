@@ -23,7 +23,7 @@
             <li><a href="#">추천 레시피</a></li>
             <li><a href="#">레시피 제작</a></li>
             <li><a href="#">레시피 검색</a></li>
-            <li><a href="#">쉐프</a></li>
+            <li><a href="../recipe/chef.do">쉐프</a></li>
           </ul>
         </li>
         <li><a class="drop" href="#">맛집</a>

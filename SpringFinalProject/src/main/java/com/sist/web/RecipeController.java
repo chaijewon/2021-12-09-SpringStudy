@@ -78,6 +78,58 @@ public class RecipeController {
 	  model.addAttribute("vo", vo);
 	  return "recipe/detail";
   }
+  @GetMapping("recipe/chef.do")
+  public String recipe_chef(String page,Model model)
+  {
+	  if(page==null)
+		  page="1";
+	  int curpage=Integer.parseInt(page);
+	  Map map=new HashMap();
+	  int rowSize=12;
+	  int start=(rowSize*curpage)-(rowSize-1);
+	  int end=rowSize*curpage;
+	  
+	  map.put("start", start);
+	  map.put("end", end);
+	  
+	  List<ChefVO> rList=dao.chefListData(map);
+	  int totalpage=dao.chefTotalPage();
+	  
+	  final int BLOCK=10;
+	  int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+	  //                (10-1)/10*10 => 0+1  ==> 1
+	  // 1(curpage=1,10) ,  11(curpage=11~20) , 21 , 31
+	  int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; //10,20....
+	  
+	  if(endPage>totalpage)
+		  endPage=totalpage;
+	  
+	  // list.jsp에서 출력에 필요한 데이터 전송
+	  model.addAttribute("curpage", curpage);
+	  model.addAttribute("totalpage", totalpage);
+	  model.addAttribute("rList", rList);
+	  model.addAttribute("startPage", startPage);
+	  model.addAttribute("endPage", endPage);
+	  return "recipe/chef";
+  }
+  /*
+   *   스프링 : 클래스 메모리할당 (등록) => 저장 => 찾기  => DL
+   *                ===================
+   *                     |
+   *                   필요한 데이터 (멤버변수의 초기화) => DI
+   *   => 기능 추가 : MVC
+   *              ----- Model찾기 , JSP로 데이터 전송 
+   *                    HandlerMapping  ViewResolver
+   *                    ---------------------------- Web
+   *   => 소스 간결화 
+   *      => 가장 긴 소스 : request로 값을 받고 VO에 값을 채운다 => 매개변수
+   */
+  @GetMapping("recipe/chef_detail.do")
+  public String recipe_chef_detail(String page,String chef,Model model)
+  {
+	  // DAO연결 => 데이터 읽기 => chef_detail.jsp 전송 
+	  return "recipe/chef_detail";
+  }
 }
 
 

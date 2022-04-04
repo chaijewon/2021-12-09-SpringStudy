@@ -21,4 +21,5 @@ public interface FoodMapper {
   public FoodVO foodDetailData(int no);
   //  추천 => 내용 
   //  검색 (지역별로) => 페이징 
+  
 }
