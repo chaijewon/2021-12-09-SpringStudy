@@ -63,4 +63,8 @@ public class FoodDAO {
     {
     	return mapper.foodDetailData(no);
     }
+    public List<FoodVO> foodFindData(String address)
+    {
+    	return mapper.foodFindData(address);
+    }
 }

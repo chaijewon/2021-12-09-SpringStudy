@@ -15,4 +15,7 @@
   <definition name="*/*" extends="main">
     <put-attribute name="content" value="/WEB-INF/{1}/{2}.jsp"></put-attribute>
   </definition>
+  <!--  Ajax 단독 실행  -->
+  <definition name="food/food_find_result/ajax" template="/WEB-INF/food/food_find_result.jsp">
+  </definition>
 </tiles-definitions>

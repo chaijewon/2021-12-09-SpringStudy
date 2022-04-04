@@ -29,7 +29,7 @@
         <li><a class="drop" href="#">맛집</a>
           <ul>
             <li><a href="../food/list.do">맛집목록</a></li>
-            <li><a href="#">맛집찾기</a></li>
+            <li><a href="../food/food_find.do">맛집찾기</a></li>
             <li><a href="#">맛집추천</a></li>
           </ul>
         </li>

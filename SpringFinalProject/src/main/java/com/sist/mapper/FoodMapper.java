@@ -20,6 +20,11 @@ public interface FoodMapper {
   // * 를 사용하기 위해서는 반드시 테이블의 모든 컬럼이 선언되어 있어야 한다 
   public FoodVO foodDetailData(int no);
   //  추천 => 내용 
-  //  검색 (지역별로) => 페이징 
+  //  검색 (지역별로)
+  @Select("SELECT no,poster,name,rownum "
+		 +"FROM (SELECT no,poster,name FROM food_location "
+		 +"WHERE address LIKE '%'||#{address}||'%') "
+		 +"WHERE rownum<=20")
+  public List<FoodVO> foodFindData(String address);
   
 }

@@ -128,6 +128,37 @@ public class RecipeController {
   public String recipe_chef_detail(String page,String chef,Model model)
   {
 	  // DAO연결 => 데이터 읽기 => chef_detail.jsp 전송 
+	  if(page==null)
+		  page="1";
+	  int curpage=Integer.parseInt(page);
+	  Map map=new HashMap();
+	  int rowSize=12;
+	  int start=(rowSize*curpage)-(rowSize-1);
+	  int end=rowSize*curpage;
+	  
+	  map.put("start", start);
+	  map.put("end", end);
+	  map.put("chef",chef);
+	  
+	  List<RecipeVO> rList=dao.chefMakeRecipeData(map);
+	  int totalpage=dao.chefMakeRecipeTotalpage(chef);
+	  
+	  final int BLOCK=10;
+	  int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+	  //                (10-1)/10*10 => 0+1  ==> 1
+	  // 1(curpage=1,10) ,  11(curpage=11~20) , 21 , 31
+	  int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; //10,20....
+	  
+	  if(endPage>totalpage)
+		  endPage=totalpage;
+	  
+	  // list.jsp에서 출력에 필요한 데이터 전송
+	  model.addAttribute("curpage", curpage);
+	  model.addAttribute("totalpage", totalpage);
+	  model.addAttribute("rList", rList);
+	  model.addAttribute("startPage", startPage);
+	  model.addAttribute("endPage", endPage);
+	  model.addAttribute("chef", chef);
 	  return "recipe/chef_detail";
   }
 }

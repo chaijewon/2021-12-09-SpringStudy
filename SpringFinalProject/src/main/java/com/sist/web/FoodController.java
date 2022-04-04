@@ -86,6 +86,24 @@ public class FoodController {
 	   model.addAttribute("vo", vo);
 	   return "food/detail";
    }
+   @GetMapping("food/food_find.do")
+   public String food_find()
+   {
+	   return "food/food_find";
+   }
+   @GetMapping("food/food_find_result.do")
+   public String find_result(int gu,Model model)
+   {
+	   String[] guList_1 = { "전체", "강서구", "양천구", "구로구", "마포구", "영등포구", "금천구",
+			    "은평구", "서대문구", "동작구", "관악구", "종로구", "중구", "용산구", "서초구", "강북구",
+			    "성북구", "도봉구", "동대문구", "성동구", "강남구", "노원구", "중랑구", "광진구", "송파구",
+			    "강동구" };
+	   //DB 연동 
+	   List<FoodVO> list=dao.foodFindData(guList_1[gu]);
+	   model.addAttribute("list", list);
+	   model.addAttribute("gu", guList_1[gu]);
+	   return "food/food_find_result/ajax";
+   }
 }
 
 

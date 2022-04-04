@@ -32,4 +32,26 @@ public interface RecipeMapper {
   
   @Select("SELECT CEIL(COUNT(*)/12.0) FROM chef")
   public int chefTotalPage();
+  
+  // Chef가 만든 레시피 읽기
+  @Select("SELECT no,poster,title,num "
+		 +"FROM (SELECT no,poster,title,rownum as num "
+		 +"FROM (SELECT /*+ INDEX_ASC(recipe recipe_no_pk)*/no,poster,title "
+		 +"FROM recipe WHERE chef=#{chef})) "
+		 +"WHERE num BETWEEN #{start} AND #{end}")
+  public List<RecipeVO> chefMakeRecipeData(Map map);
+  // 총페이지 
+  @Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe "
+		 +"WHERE chef=#{chef}")
+  public int chefMakeRecipeTotalpage(String chef);
 }
+
+
+
+
+
+
+
+
+
+
