@@ -5,8 +5,10 @@ package com.sist.mapper;
 //                       매개변수로 설정(parameterType)  리턴형으로 설정(resultType) 
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.sist.vo.*;
 public interface BoardMapper {
@@ -21,6 +23,17 @@ public interface BoardMapper {
    @Select("SELECT COUNT(*) FROM final_board")
    public int boardRowCount();
    // 상세 보기  => Read
+   @Update("UPDATE final_board SET "
+		  +"hit=hit+1 "
+		  +"WHERE no=#{no}")
+   public void hitIncrement(int no);
+   
+   //실제 상세보기 데이터 
+   @Select("SELECT no,name,subject,content,"
+		  +"TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit "
+		  +"FROM final_board "
+		  +"WHERE no=#{no}")
+   public BoardVO boardDetailData(int no);
    // 글쓰기      => Create
    // 기본키 => Mybatis => @SelectKey, 서브쿼리 , sequence => 자동증가번호 
    @Insert("INSERT INTO final_board(no,name,subject,content,pwd) "
@@ -29,7 +42,17 @@ public interface BoardMapper {
    public void boardInsert(BoardVO vo);
    // VO => #{name} => vo.getName() , #{subject} => vo.getSubject()
    // Map => #{start} => map.get("start")
+   @Select("SELECT pwd FROM final_board "
+		  +"WHERE no=#{no}")
+   public String boardGetPassword(int no);
    // 수정하기   => Update
+   @Update("UPDATE final_board SET "
+		  +"name=#{name},subject=#{subject},content=#{content} "
+		  +"WHERE no=#{no}")
+   public void boardUpdate(BoardVO vo);
    // 삭제        => Delete 
+   @Delete("DELETE FROM final_board "
+		  +"WHERE no=#{no}")
+   public void boardDelete(int no);
    // DB , XML , IO => ***메모리 (ArrayList) add,remove,set,get
 }

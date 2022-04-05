@@ -31,45 +31,50 @@
 <div class="wrapper row3">
   <main class="container clear">
     <div class="row">
-      <h3 class="text-center">내용보기</h3>
+      <h3 class="text-center">수정하기</h3>
+      <form method=post action="../freeboard/update_ok.do">
       <table class="table">
         <tr>
-         <th class="text-center" width=20%>번호</th>
-         <td class="text-center" width=30%>${vo.no }</td>
-         <th class="text-center" width=20%>작성일</th>
-         <td class="text-center" width=30%>${vo.dbday }</td>
-        </tr>
-        <tr>
-         <th class="text-center" width=20%>이름</th>
-         <td class="text-center" width=30%>${vo.name }</td>
-         <th class="text-center" width=20%>조회수</th>
-         <td class="text-center" width=30%>${vo.hit }</td>
-        </tr>
-        <tr>
-         <th class="text-center" width=20%>제목</th>
-         <td colspan="3">${vo.subject }</td>
-        </tr>
-        <tr>
-          <td colspan="4" valign="top" class="text-left" height="200">
-           <pre style="border:none;background-color:white;white-space: pre-wrap;">${vo.content }</pre>
+          <th width=20% class="text-right">이름</th>
+          <td width=80%>
+           <input type=text name=name size=15 class="input-sm"
+            value="${vo.name }"
+           >
+           <input type=hidden name=no value="${vo.no }">
           </td>
         </tr>
         <tr>
-          <td colspan="4" class="text-right">
-            <a href="../freeboard/update.do?no=${vo.no }" class="btn btn-xs btn-danger">수정</a>
-            <a href="../freeboard/delete.do?no=${vo.no }" class="btn btn-xs btn-success">삭제</a>
-            <a href="list.do" class="btn btn-xs btn-info">목록</a>
+          <th width=20% class="text-right">제목</th>
+          <td width=80%>
+           <input type=text name=subject size=55 class="input-sm"
+            value="${vo.subject }"
+           >
+          </td>
+        </tr>
+        <tr>
+          <th width=20% class="text-right">내용</th>
+          <td width=80%>
+            <textarea rows="10" cols="58" name=content>${vo.content }</textarea>
+          </td>
+        </tr>
+        <tr>
+          <th width=20% class="text-right">비밀번호</th>
+          <td width=80%>
+            <input type=password name=pwd size=10 class="input-sm">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-center">
+            <input type=submit value="수정" class="btn btn-sm btn-success">
+            <input type=button value="취소" class="btn btn-sm btn-info"
+             onclick="javasecript:history.back()"
+            >
           </td>
         </tr>
       </table>
+      </form>
     </div>
   </main>
+ </div>
 </body>
 </html>
-
-
-
-
-
-
-

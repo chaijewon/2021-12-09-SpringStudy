@@ -9,7 +9,7 @@
 <style type="text/css">
 .row{
   margin: 0px auto;
-  width:650px;
+  width:400px;
 }
 </style>
 </head>
@@ -31,42 +31,30 @@
 <div class="wrapper row3">
   <main class="container clear">
     <div class="row">
-      <h3 class="text-center">내용보기</h3>
+      <h3 class="text-center">삭제하기</h3>
+     <form method=post action="../freeboard/delete_ok.do">
       <table class="table">
         <tr>
-         <th class="text-center" width=20%>번호</th>
-         <td class="text-center" width=30%>${vo.no }</td>
-         <th class="text-center" width=20%>작성일</th>
-         <td class="text-center" width=30%>${vo.dbday }</td>
-        </tr>
-        <tr>
-         <th class="text-center" width=20%>이름</th>
-         <td class="text-center" width=30%>${vo.name }</td>
-         <th class="text-center" width=20%>조회수</th>
-         <td class="text-center" width=30%>${vo.hit }</td>
-        </tr>
-        <tr>
-         <th class="text-center" width=20%>제목</th>
-         <td colspan="3">${vo.subject }</td>
-        </tr>
-        <tr>
-          <td colspan="4" valign="top" class="text-left" height="200">
-           <pre style="border:none;background-color:white;white-space: pre-wrap;">${vo.content }</pre>
+          <td class="text-center">
+          비밀번호:<input type=password name=pwd size=15 class="input-sm">
+            <input type=hidden name=no value="${no }">
           </td>
         </tr>
         <tr>
-          <td colspan="4" class="text-right">
-            <a href="../freeboard/update.do?no=${vo.no }" class="btn btn-xs btn-danger">수정</a>
-            <a href="../freeboard/delete.do?no=${vo.no }" class="btn btn-xs btn-success">삭제</a>
-            <a href="list.do" class="btn btn-xs btn-info">목록</a>
+          <td class="text-center">
+            <input type=submit value="삭제" class="btn btn-sm btn-danger">
+            <input type=button value="취소" class="btn btn-sm btn-info"
+              onclick="javascript:history.back()"
+            >
           </td>
         </tr>
       </table>
+      </form>
     </div>
   </main>
+</div>
 </body>
 </html>
-
 
 
 

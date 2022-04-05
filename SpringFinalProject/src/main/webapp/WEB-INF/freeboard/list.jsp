@@ -52,7 +52,16 @@
       <c:forEach var="vo" items="${list }">
        <tr>
         <td width=10% class="text-center">${count }</td>
-        <td width=45%>${vo.subject }</td>
+        <td width=45%><a href="../freeboard/detail.do?no=${vo.no }">${vo.subject }</a></td>
+        <%--
+             http://localhost:8080 /web  /freeboard/detail.do?no=10
+             ===================== ======================== =====
+                                   =====    
+                ServerInfo         ContextPath
+             ================================================ URL
+                                  =========================== URI 
+                                  no => 톰캣에 의해서 request에 담아진다 
+         --%>
         <td width=15% class="text-center">${vo.name }</td>
         <td width=20% class="text-center">${vo.dbday }</td>
         <td width=10% class="text-center">${vo.hit }</td>
@@ -65,7 +74,7 @@
       <!-- class="current" -->
         <ul>
           <c:if test="${startPage>1 }">
-           <li><a href="../recipe/list.do?page=${startPage-1 }">&laquo; Previous</a></li>
+           <li><a href="../freeboard/list.do?page=${startPage-1 }">&laquo; Previous</a></li>
           </c:if>
           <c:forEach var="i" begin="${startPage }" end="${endPage }">
            <c:if test="${i==curpage }">
@@ -74,11 +83,11 @@
            <c:if test="${i!=curpage }">
             <c:set var="style" value=""/>
            </c:if>
-           <li ${style }><a href="../recipe/list.do?page=${i }">${i }</a></li>
+           <li ${style }><a href="../freeboard/list.do?page=${i }">${i }</a></li>
           </c:forEach>
           
           <c:if test="${endPage<totalpage }">
-          <li><a href="../recipe/list.do?page=${endPage+1 }">Next &raquo;</a></li>
+          <li><a href="../freeboard/list.do?page=${endPage+1 }">Next &raquo;</a></li>
           </c:if>
         </ul>
       </nav>

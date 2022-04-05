@@ -88,6 +88,31 @@ public class FreeBoardController {
 	   dao.boardInsert(vo);
 	   return "redirect:list.do"; // request를 초기화 => 화면 재전송 
    }
+   // ?no=10 => 사용자가 보내는 값 => 매개변수로 받는다 
+   @GetMapping("detail.do")
+   public String freeboard_detail(int no,Model model)
+   {
+	   //DAO연동 
+	   BoardVO vo=dao.boardDetailData(no);
+	   model.addAttribute("vo", vo);
+	   return "freeboard/detail";
+   }
+   
+   @GetMapping("update.do")
+   public String freeboard_update(int no,Model model)
+   {
+	   //DAO연동 
+	   BoardVO vo=dao.boardUpdateData(no);
+	   model.addAttribute("vo", vo);
+	   return "freeboard/update";
+   }
+   
+   @GetMapping("delete.do")
+   public String freeboard_delete(int no,Model model)
+   {
+	   model.addAttribute("no", no);
+	   return "freeboard/delete";
+   }
    
 }
 
