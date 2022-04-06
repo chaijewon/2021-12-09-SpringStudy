@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../images/demo/food.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+let i=0;
 $(function(){
 	$('.images').hover(function(){
 		$(this).css("cursor","pointer");
@@ -18,6 +19,12 @@ $(function(){
 	
 	$('.images').click(function(){
 		let gu=$(this).attr("data-value");
+		for(let i=1;i<=25;i++)
+		{
+			$('#gu'+i).attr("src","../images/demo/map/gu_"+i+"_off.png")
+		}
+		$(this).attr("src","../images/demo/map/gu_"+gu+"_on.png")
+		
 		$.ajax({
 			type:'get',
 			url:'../food/food_find_result.do',
@@ -52,9 +59,12 @@ $(function(){
   <div id="a">
     <img id="seoul_1" src="../images/demo/map/1111.png">
     <c:forEach var="i" begin="1" end="25">
-     <img id="gu${i }" src="../images/demo/map/gu_${i }_off.png"
+     <%-- <img id="gu${i }" src="../images/demo/map/gu_${i }_off.png"
       onmouseover="this.src='../images/demo/map/gu_${i }_on.png'"
       onmouseout="this.src='../images/demo/map/gu_${i }_off.png'"
+      class="images" data-value="${i }"
+     > --%>
+     <img id="gu${i }" src="../images/demo/map/gu_${i }_off.png"
       class="images" data-value="${i }"
      >
     </c:forEach>

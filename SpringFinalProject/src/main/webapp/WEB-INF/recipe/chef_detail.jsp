@@ -30,6 +30,7 @@
       <!-- ################################################################################################ -->
       <div id="gallery">
         <figure>
+         <header class="heading">&lt;${chef }&gt;님의 레시피</header>
           <ul class="nospace clear">
            <c:forEach var="vo" items="${rList }" varStatus="s">
             <c:if test="${s.index%4==0 }">
