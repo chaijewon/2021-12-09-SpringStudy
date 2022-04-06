@@ -44,6 +44,20 @@ public interface RecipeMapper {
   @Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe "
 		 +"WHERE chef=#{chef}")
   public int chefMakeRecipeTotalpage(String chef);
+  
+  // Recipe - Find
+  @Select("SELECT no,title,poster,num "
+	     +"FROM (SELECT no,title,poster,rownum as num "
+		 +"FROM (SELECT /*+ INDEX_ASC(recipe recipe_no_pk)*/ no,title,poster "
+		 +"FROM recipe "
+		 +"WHERE title LIKE '%'||#{fd}||'%')) "
+		 +"WHERE num BETWEEN #{start} AND #{end}")
+  public List<RecipeVO> recipeFindData(Map map);
+  
+  @Select("SELECT CEIL(COUNT(*)/12.0) "
+		 +"FROM recipe "
+		 +"WHERE title LIKE '%'||#{fd}||'%'")
+  public int recipeFindTotalPage(String fd);
 }
 
 

@@ -161,6 +161,12 @@ public class RecipeController {
 	  model.addAttribute("chef", chef);
 	  return "recipe/chef_detail";
   }
+  
+  @GetMapping("recipe/recipe_find.do")
+  public String recipe_find(String fd,Model model)
+  {
+	  return "recipe/recipe_find";
+  }
 }
 
 

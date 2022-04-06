@@ -73,6 +73,13 @@ public class ReplyDAO {
 	  {
 		  bCheck=true;
 		  mapper.replyDelete1(group_id);
+		  // mapper = 메소드 
+		  /*
+		   *   매개변수:무조건 1개 사용 (Map,VO에 첨부)
+		   *   #{name} => Map (map.get("name"))
+		   *   #{name} => VO (vo.getName())
+		   *   리턴형 : int , String , VO ,List
+		   */
 	  }
 	  return bCheck;
   }

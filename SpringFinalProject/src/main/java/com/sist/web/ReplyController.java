@@ -1,5 +1,8 @@
 package com.sist.web;
 
+import org.snu.ids.ha.index.Keyword;
+import org.snu.ids.ha.index.KeywordExtractor;
+import org.snu.ids.ha.index.KeywordList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -104,6 +107,29 @@ public class ReplyController {
 	   int count=dao.replyCount(vo.getGroup_id());
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("count", count);
+
+       // 단어 추출 (형태소 분석) => 꼬꼬마 (카이스트) => korean-text
+	   // 단어 사전 => 맛 
+	   KeywordExtractor ke=new KeywordExtractor();
+	   KeywordList kl=ke.extractKeyword(vo.getContent(), true);
+	   List<KeywordVO> list=new ArrayList<KeywordVO>();
+	   for(int i=0;i<kl.size();i++)
+	   {
+		   Keyword kw=kl.get(i);
+		   //System.out.println(kw.getKey()+","+kw.getCnt());
+		   String s=kw.getKey().replaceAll("[0-9]", "");
+		   s=s.substring(0,s.indexOf(":"));
+		   //민원
+		   if(s.length()>1 && kw.getCnt()>1)
+		   {
+			   System.out.println(s+","+kw.getCnt());
+			   KeywordVO kvo=new KeywordVO();
+			   kvo.setWord(s);
+			   kvo.setCount(kw.getCnt());
+			   list.add(kvo);
+		   }
+	   }
+	   model.addAttribute("list", list);
 	   return "reply/detail";
    }
    @GetMapping("reply.do")
