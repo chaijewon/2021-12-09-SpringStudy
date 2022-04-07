@@ -25,6 +25,9 @@ import com.sist.vo.*;
  *     4. 프로그래머가 활용하는 부분 
  *     -----------------------------
  *     5. 메소드 호출 (destroy-method)     객체와 객체의 의존 관계도설정 (DI)
+ *     
+ *     JSP(메뉴) => Controller => Mapper => DAO
+ *                            <=        <=
  */
 public class RecipeDAO {
    // 스프링으로부터 필요한 객체를 가지고 온다 
@@ -77,6 +80,10 @@ public class RecipeDAO {
    public int recipeRecommandTotalPage(String fd)
    {
 	   return mapper.recipeRecommandTotalPage(fd);
+   }
+   public RecipeVO recipeMainData(int no)
+   {
+	   return mapper.recipeMainData(no);
    }
 }
 

@@ -72,6 +72,12 @@ public interface RecipeMapper {
   @Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe "
 		 +"WHERE REGEXP_LIKE(title,#{fd})")
   public int recipeRecommandTotalPage(String fd);
+  
+  // main
+  @Select("SELECT no,title,poster "
+		 +"FROM recipe "
+		 +"WHERE no=#{no}")
+  public RecipeVO recipeMainData(int no);
 }
 
 

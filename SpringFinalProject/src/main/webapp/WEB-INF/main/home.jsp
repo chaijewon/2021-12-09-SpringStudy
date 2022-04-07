@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,23 +63,23 @@
     <div class="group">
       <div class="one_third first">
         <article class="service"><i class="icon red circle fa fa-bell-o"></i>
-          <h2 class="heading">Phasellus accumsan velit lacus</h2>
-          <p class="btmspace-10">Ut vitae mi turpis donec convallis turpis bibendum dolor hendrerit eget ultrices.</p>
-          <p><a href="#">Read More &raquo;</a></p>
+          <h2 class="heading">서울 명소</h2>
+          <p class="btmspace-10">놓칠 수 없는 서울의 명소</p>
+          <p><a href="../seoul/location.do">Read More &raquo;</a></p>
         </article>
       </div>
       <div class="one_third">
         <article class="service"><i class="icon orange circle fa fa-bicycle"></i>
-          <h2 class="heading">Duis in dictum erat phasellus cursus</h2>
-          <p class="btmspace-10">Ut augue ante euismod vitae scelerisque non tincidunt ut velit integer et iaculis.</p>
-          <p><a href="#">Read More &raquo;</a></p>
+          <h2 class="heading">서울 자연/관광</h2>
+          <p class="btmspace-10">멀리 가지 않아도 도심 속에서 느낄 수 있는 자연의 힐링</p>
+          <p><a href="../seoul/nature.do">Read More &raquo;</a></p>
         </article>
       </div>
       <div class="one_third">
         <article class="service"><i class="icon green circle fa fa-mortar-board"></i>
-          <h2 class="heading">Vivamus accumsan mollis mi in ultricies</h2>
-          <p class="btmspace-10">Nullam commodo orci ut justo bibendum tristique proin vel est at risus volutpat.</p>
-          <p><a href="#">Read More &raquo;</a></p>
+          <h2 class="heading">서울 호텔</h2>
+          <p class="btmspace-10">잠드는 순간에도 특별한 경험을 원하는 여행객 모두를 위한 서울의 호텔</p>
+          <p><a href="../seoul/hotel.do">Read More &raquo;</a></p>
         </article>
       </div>
     </div>
@@ -93,10 +94,8 @@
   <section id="cta" class="clear"> 
     <!-- ################################################################################################ -->
     <div class="three_quarter first">
-      <h2 class="heading">Fusce quis feugiat urna dui leo egestas augue</h2>
-      <p>Aenean semper elementum tellus, ut placerat leo. Quisque vehicula, urna sit amet pulvinar dapibus.</p>
+      <h2 class="heading">오늘의 레시피</p>
     </div>
-    <div class="one_quarter"><a class="btn" href="#">Get it now <span class="fa fa-arrow-right"></span></a></div>
     <!-- ################################################################################################ -->
   </section>
 </div>
@@ -107,46 +106,18 @@
   <div class="latest"> 
     <!-- ################################################################################################ -->
     <ul class="nospace group">
-      <li>
-        <figure><a class="overlay" href="#"><img src="../images/demo/latest/01.png" alt=""></a>
-          <figcaption class="inspace-30 center">
-            <p class="bold uppercase">Ante lectus laoreet</p>
-            <p><a href="#">View Here &raquo;</a></p>
-          </figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure><a class="overlay" href="#"><img src="../images/demo/latest/01.png" alt=""></a>
-          <figcaption class="inspace-30 center">
-            <p class="bold uppercase">Non facilisis tellus</p>
-            <p><a href="#">View Here &raquo;</a></p>
-          </figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure><a class="overlay" href="#"><img src="../images/demo/latest/01.png" alt=""></a>
-          <figcaption class="inspace-30 center">
-            <p class="bold uppercase">In egestas tincidunt</p>
-            <p><a href="#">View Here &raquo;</a></p>
-          </figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure><a class="overlay" href="#"><img src="../images/demo/latest/01.png" alt=""></a>
-          <figcaption class="inspace-30 center">
-            <p class="bold uppercase">Integer ullamcorper</p>
-            <p><a href="#">View Here &raquo;</a></p>
-          </figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure><a class="overlay" href="#"><img src="../images/demo/latest/01.png" alt=""></a>
-          <figcaption class="inspace-30 center">
-            <p class="bold uppercase">Cras lectus pulvinar</p>
-            <p><a href="#">View Here &raquo;</a></p>
-          </figcaption>
-        </figure>
-      </li>
+      <c:forEach var="vo" items="${list }">
+        <li>
+	        <figure><a class="overlay" href="#"><img src="${vo.poster }" style="width:380px;height: 380px"></a>
+	          <figcaption class="inspace-30 center">
+	            <p class="bold uppercase">${vo.title }</p>
+	            <p><a href="../recipe/detail.do?no=${vo.no }">상세보기 &raquo;</a></p>
+	          </figcaption>
+	        </figure>
+	      </li>
+      </c:forEach>
+      
+      
     </ul>
     <!-- ################################################################################################ -->
   </div>
