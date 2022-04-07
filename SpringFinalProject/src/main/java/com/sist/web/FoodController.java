@@ -104,6 +104,12 @@ public class FoodController {
 	   model.addAttribute("gu", guList_1[gu]);
 	   return "food/food_find_result/ajax";
    }
+   
+   @GetMapping("food/food_recommand.do")
+   public String food_recommand()
+   {
+	   return "food/food_recommand";
+   }
 }
 
 

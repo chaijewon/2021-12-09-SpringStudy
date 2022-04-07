@@ -30,14 +30,14 @@
           <ul>
             <li><a href="../food/list.do">맛집목록</a></li>
             <li><a href="../food/food_find.do">맛집찾기</a></li>
-            <li><a href="#">맛집추천</a></li>
+            <li><a href="../food/food_recommand.do">맛집추천</a></li>
           </ul>
         </li>
         <li><a class="drop" href="#">커뮤니티</a>
           <ul>
             <li><a href="../freeboard/list.do">자유게시판</a></li>
             <li><a href="../reply/list.do">묻고답하기</a></li>
-            <li><a href="../chat/chat.do">실시간 상담</a></li>
+            <li><a href="../site/chat/chat.do">실시간 상담</a></li>
           </ul>
         </li>
         <li><a href="#">재료가격비교</a></li>

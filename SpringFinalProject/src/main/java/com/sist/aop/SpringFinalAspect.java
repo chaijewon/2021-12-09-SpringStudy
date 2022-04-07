@@ -1,6 +1,9 @@
 package com.sist.aop;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 // 재사용기법 (메소드 자동 호출) => 반복을 제거하는 프로그램 (AOP)
@@ -23,7 +26,18 @@ import org.springframework.stereotype.Component;
 @Aspect // 메모리 할당을 하지 않는다 
 @Component // 로그(사용자가 요청 => 처리)
 public class SpringFinalAspect {
-
+   @Around("execution(* com.sist.web.*Controller.*(..))")
+   public Object around(ProceedingJoinPoint jp) throws Throwable
+   {
+	   Object obj=null;
+	   System.out.println(jp.getSignature()+"호출전...");
+	   long start=System.currentTimeMillis();
+	   obj=jp.proceed();
+	   long end=System.currentTimeMillis();
+	   System.out.println(jp.getSignature()+"메소드 처리 시간:"+(end-start));
+	   return obj;
+   }
+   
 }
 
 

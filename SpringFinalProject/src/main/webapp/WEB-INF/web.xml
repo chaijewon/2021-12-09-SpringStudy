@@ -4,15 +4,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	
-	<!-- 
-	  채팅은 별도로 셋팅 (http , ws)
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
-	</context-param>
+	 <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+       </context-param>
+      <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.sist.chat.WebSocketConfig</param-value>
+      </context-param>
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>-->
+	  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -37,12 +39,11 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
-		<!-- 
-		   <url-pattern>/</url-pattern>
-		   
-		   @RequestMapping("/detail")
-		 -->
 	</servlet-mapping>
+	<!-- <servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping> -->
 	<!-- 한글 변환  -->
 	<filter>
 	  <filter-name>encodingFilter</filter-name>

@@ -58,6 +58,20 @@ public interface RecipeMapper {
 		 +"FROM recipe "
 		 +"WHERE title LIKE '%'||#{fd}||'%'")
   public int recipeFindTotalPage(String fd);
+  
+  // 추천 = 레시피 
+  @Select("SELECT no,title,poster,num "
+		 +"FROM (SELECT no,title,poster,rownum as num "
+		 +"FROM (SELECT /*+ INDEX_ASC(recipe recipe_no_pk)*/no,title,poster "
+		 +"FROM recipe "
+		 +"WHERE REGEXP_LIKE(title,#{fd}))) "
+		 +"WHERE num BETWEEN #{start} AND #{end}")
+  // 밥/죽/떡 => Like 3번  => REGEXP_LIKE(title,'밥|죽|떡')
+  public List<RecipeVO> recipeRecommandData(Map map);
+  
+  @Select("SELECT CEIL(COUNT(*)/12.0) FROM recipe "
+		 +"WHERE REGEXP_LIKE(title,#{fd})")
+  public int recipeRecommandTotalPage(String fd);
 }
 
 

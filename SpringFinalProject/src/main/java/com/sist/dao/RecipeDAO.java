@@ -70,6 +70,14 @@ public class RecipeDAO {
    {
 	   return mapper.recipeFindTotalPage(fd);
    }
+   public List<RecipeVO> recipeRecommandData(Map map)
+   {
+	   return mapper.recipeRecommandData(map);
+   }
+   public int recipeRecommandTotalPage(String fd)
+   {
+	   return mapper.recipeRecommandTotalPage(fd);
+   }
 }
 
 

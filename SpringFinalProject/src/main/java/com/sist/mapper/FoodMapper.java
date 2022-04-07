@@ -26,5 +26,13 @@ public interface FoodMapper {
 		 +"WHERE address LIKE '%'||#{address}||'%') "
 		 +"WHERE rownum<=20")
   public List<FoodVO> foodFindData(String address);
+  // 추천 
+  @Select("SELECT DISTINCT name FROM food_location")
+  public List<String> foodGetNameData();
+  
+  @Select("SELECT no,poster,name "
+		 +"FROM food_location "
+		 +"WHERE name=#{name}")
+  public List<FoodVO> foodNameFindData(String name);
   
 }

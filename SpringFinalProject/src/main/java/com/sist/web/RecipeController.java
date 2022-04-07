@@ -167,6 +167,23 @@ public class RecipeController {
   {
 	  return "recipe/recipe_find";
   }
+  /*
+   *  종류별
+상황별
+재료별
+방법별
+전체밑반찬메인반찬국/탕찌개디저트면/만두밥/죽/떡퓨전김치/젓갈/장류양념/소스/잼양식샐러드스프빵과자차/음료/술기타
+전체일상초스피드손님접대술안주다이어트도시락영양식간식야식푸드스타일링해장명절이유식기타
+전체소고기돼지고기닭고기육류채소류해물류달걀/유제품가공식품류쌀밀가루건어물류버섯류과일류콩/견과류곡류기타
+전체볶음끓이기부침조림무침비빔찜절임튀김삶기굽기데치기회기타
+테마별
+여성/뷰티 엄마/아기 건강/질병 제철요리 추천
+   */
+  @GetMapping("recipe/recipe_recommand.do")
+  public String recipe_recommand()
+  {
+	  return "recipe/recipe_recommand";
+  }
 }
 
 
