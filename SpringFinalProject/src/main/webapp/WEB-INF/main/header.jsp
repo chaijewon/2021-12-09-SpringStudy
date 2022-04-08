@@ -40,7 +40,7 @@
             <li><a href="../chat/chat.do">실시간 상담</a></li>
           </ul>
         </li>
-        <li><a href="#">재료가격비교</a></li>
+        <li><a href="../recipe/priceCompare.do">재료가격비교</a></li>
         <li><a href="../seoul/seoul_make.do">코스만들기</a></li>
       </ul>
     </nav>

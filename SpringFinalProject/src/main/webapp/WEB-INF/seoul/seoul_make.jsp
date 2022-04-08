@@ -80,22 +80,30 @@
 <div class="wrapper row3">
   <main class="container clear"> 
     <div class="row">
+     <form method="post" action="../seoul/seoul_make.do">
+	     <input type=text name="fd" size=20 class="input-sm" style="float: left">
+	     <input type="submit" value="검색"
+	      class="btn btn-sm btn-danger" style="float: left">
+     </form>
+    </div>
+    <div style="height: 30px"></div>
+    <div class="row">
 	    <div class="img">
 	        <div class="content1">
-	            <h1>Hello!</h1>
-	            <h2>My name is nunu</h2>
-	        </div>
-	        <div class="content2">
-	            <h1>Hello!</h1>
-	            <h2>My name is nunu</h2>
-	        </div>
-	        <div class="content3">
-	            <h1>Hello!</h1>
-	            <h2>My name is nunu</h2>
+	            <h1>서울 명소</h1>
+	            <h2><a href="../seoul/location_detail.do?no=${svo.no }">${svo.title }</a></h2>
 	        </div>
 	        <div class="content">
-	            <h1>Hello!</h1>
-	            <h2>My name is nunu</h2>
+	            <h1>점심 맛집</h1>
+	            <h2><a href="../food/detail.do?no=${fvo1.no }">${fvo1.name }</a></h2>
+	        </div>
+	        <div class="content2">
+	            <h1>서울 자연/관광</h1>
+	            <h2><a href="../seoul/nature_detail.do?no=${nvo.no }">${nvo.title }</a></h2>
+	        </div>
+	        <div class="content3">
+	            <h1>저녁 맛집</h1>
+	            <h2><a href="../food/detail.do?no=${fvo2.no }">${fvo2.name }</a></h2>
 	        </div>
 	        <div class="img-cover"></div>
 	    </div>

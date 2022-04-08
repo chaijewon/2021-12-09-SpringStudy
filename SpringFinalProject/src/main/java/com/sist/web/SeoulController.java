@@ -14,8 +14,18 @@ public class SeoulController {
   private SeoulDAO dao; 
   
   @RequestMapping("seoul/seoul_make.do")
-  public String seoul_make()
+  public String seoul_make(String fd,Model model)
   {
+	  if(fd==null)
+		  fd="강남";
+	  SeoulVO svo=dao.seoulMyLocationData(fd);
+	  FoodVO fvo1=dao.seoulMyFoodData1(fd);
+	  FoodVO fvo2=dao.seoulMyFoodData2(fd);
+	  SeoulVO nvo=dao.seoulMyNatureData(fd);
+	  model.addAttribute("svo", svo);
+	  model.addAttribute("fvo1", fvo1);
+	  model.addAttribute("fvo2", fvo2);
+	  model.addAttribute("nvo", nvo);
 	  return "seoul/seoul_make";
   }
   

@@ -4,8 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.sist.vo.*;
 import com.sist.dao.*;
 @Controller
@@ -14,7 +20,27 @@ public class RecipeController {
   private RecipeDAO dao;
   @GetMapping("recipe/list.do")
   // 메소드는 리턴형 => 특별한 경우가 아니면 => String , void(화면 변경이 없는 경우, 다운로드)
-  public String recipe_list(String page,Model model)
+  /*
+   *    매개변수 => 객체 (DispatcherServlet)
+   *    1) 커맨드 객체 : ~VO (회원가입 , 클쓰기...)
+   *    2) Model : request로 변환 => JSP 데이터(요청결과) 전송 => 전송 객체
+   *       forward에서만 사용 ==> return "경로/JSP명";
+   *    3) RedirectAttributes : 재전송 
+   *       sendRedirect : return "redirect:~.do"
+   *    4) HttpSetvletRequest : 1) Cookie읽기 
+   *    5) HttpServletResponse : 1) Cookie전송 , 2) 파일다운로드 
+   *    6) HttpSession 
+   *    7) List : 같은 이름의 데이터가 여러개 있는 경우 (checkbox)
+   *    8) 일반 변수 => page , 검색어 , 비밀번호 , 번호 ...
+   *    -------------------------------- 400(bad request) => 받는 데이터형이 틀릴 경우
+   *    ?no=10  ==> (boolean no) 
+   *    => 일반 데이터형은 1개 통합 => String ==> 필요시마다 변환(Wrapper)
+   *       => int변환 (Integer.parseInt()) 
+   *       => boolean (Boolean.parseBoolean())
+   *       => double (Double.parseDouble())
+   *       => 일반 데이터형 기능을 사용하기 쉽게 만든 클래스 (기술면접) 
+   */
+  public String recipe_list(String page,Model model,HttpServletRequest request)
   {
 	  //Model => request,response사용을 권장하지 않는다 => 전송객체 (Model)
 	  //사용자가 보내준 값 , 내장객체 => DispatcherServlet을 통해서 받아 온다 
@@ -54,10 +80,39 @@ public class RecipeController {
 	  model.addAttribute("startPage", startPage);
 	  model.addAttribute("endPage", endPage);
 	  // Cookie값 전송 
+	  Cookie[] cookies=request.getCookies();
+	  List<RecipeDetailVO> cList=new ArrayList<RecipeDetailVO>();
+	  if(cookies!=null)
+	  {
+		  for(int i=cookies.length-1;i>=0;i--)
+		  {
+			  if(cookies[i].getName().startsWith("r"))
+			  {
+				  cookies[i].setPath("/");
+				  String no=cookies[i].getValue();
+				  RecipeDetailVO vo=dao.recipeDetailData(Integer.parseInt(no));
+			      cList.add(vo);
+			  }
+		  }
+		  model.addAttribute("cList", cList);
+	  }
 	  return "recipe/list";
   }
   // 조건 ==> 라이브러리 => 안에 코딩이 불가능 (컴파일된 파일만 보내준다) 
   // 읽어 갈 수 있는 소스 코딩 => 형식 => String
+  @GetMapping("recipe/detail_before.do")
+  public String rescipe_detail_before(int no,HttpServletResponse response,RedirectAttributes ra)
+  {
+	  Cookie cookie=new Cookie("r"+no, String.valueOf(no));
+	  // 쿠키 단점 => 문자열만 저장이 가능 
+	  cookie.setPath("/");//저장 위치
+	  cookie.setMaxAge(60*60*24);//기간 
+	  // 클라이언트로 전송 
+	  response.addCookie(cookie);
+	  
+	  ra.addAttribute("no", no);
+	  return "redirect:../recipe/detail.do";
+  }
   @GetMapping("recipe/detail.do")
   public String recipe_detail(int no,Model model)
   {
@@ -183,6 +238,12 @@ public class RecipeController {
   public String recipe_recommand()
   {
 	  return "recipe/recipe_recommand";
+  }
+  
+  @GetMapping("recipe/priceCompare.do")
+  public String recipe_price()
+  {
+	  return "recipe/priceCompare";
   }
 }
 
