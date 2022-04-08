@@ -85,6 +85,18 @@ public class RecipeDAO {
    {
 	   return mapper.recipeMainData(no);
    }
+   public List<RecipeVO> recipeSearchData(Map map)
+   {
+	   return mapper.recipeSearchData(map);
+   }
+   public List<GoodsVO> goodsLikeData(String product_name)
+   {
+	   return mapper.goodsLikeData(product_name);
+   }
+   public int goodsCountData(String product_name)
+   {
+	   return mapper.goodsCountData(product_name);
+   }
 }
 
 
