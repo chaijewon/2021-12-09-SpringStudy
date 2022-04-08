@@ -31,7 +31,7 @@ let websocket;
 function connection()
 {
 	  // 소켓 생성 
-	  websocket=new WebSocket("ws://localhost:8080/web/chat")
+	  websocket=new WebSocket("ws://localhost:8080/web/chat-ws")
 	  websocket.onopen=onOpen;
 	  websocket.onmessage=onMessage;
 	  websocket.onclose=onClose;

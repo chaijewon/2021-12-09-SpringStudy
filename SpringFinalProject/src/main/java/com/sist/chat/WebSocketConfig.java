@@ -12,7 +12,7 @@ public class WebSocketConfig implements WebSocketConfigurer{
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		// TODO Auto-generated method stub
-		registry.addHandler(chatHandler(), "/site/chat/chat-ws");
+		registry.addHandler(chatHandler(), "/chat-ws");
 		System.out.println("Call... 1");
 	}
 	@Bean

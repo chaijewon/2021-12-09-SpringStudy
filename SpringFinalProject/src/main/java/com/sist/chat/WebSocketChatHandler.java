@@ -10,7 +10,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler{
 	private Map<String,WebSocketSession> users=
 			  new HashMap<String ,WebSocketSession>();
 	// 클라이언트가 접속시에 처리 => 클라이언트 정보 저장 
-	@Override
+	
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 	     System.out.println(session.getId()+"님이 입장하셨습니다");
 	     users.put(session.getId(), session);//session=IP,PORT

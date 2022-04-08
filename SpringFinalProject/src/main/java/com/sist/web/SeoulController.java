@@ -131,18 +131,30 @@ public class SeoulController {
    *   
    */
   // 요청 처리를 제어하는 클래스 => Controller
+  // 1.  요청 데이터  ?변수 
+  // 2.  데이터를 받아서 오라클 
+  // 3.  출력시에 어떤 데이터 
+  // 4.  MyBatis(SQL)
+  // 5.  스프링을 정상적으로 작동 (요청 => 클래스 => 메소드 => JSP => 데이터전송)
+  // => 라구(업체) => ..라구요   시 , 고  짜* 
   @GetMapping("seoul/location_detail.do")
   public String seoul_location_detail(int no,Model model)
   {
-	  String address="";
-	  String type="";
+	  //  마포구
 	  SeoulVO vo=dao.seoulLocationDetailData(no);
-	  List<FoodVO> fList=dao.seoulLocationFoodHouse(address);
-	  List<RecipeVO> rList=dao.seoulLocationRecipe(type);
-	  
+	  String address=vo.getAddress();
+	  System.out.println("주소:"+address);
+	  address=address.replaceAll("[0-9]", "");// 전체 숫자를 공백으로 변환 
+	  address=address.trim();
+	  System.out.println("1. address="+address);
+	  String addr1=address.substring(address.indexOf(" ")+1);
+	  System.out.println("2. addr1="+addr1);
+	  String addr2=addr1.trim().substring(0,addr1.indexOf(" "));
+	  System.out.println("3. addr2="+addr2);
+	  List<FoodVO> fList=dao.seoulLocationFoodHouse(addr2);
 	  model.addAttribute("vo", vo);
 	  model.addAttribute("fList", fList);
-	  model.addAttribute("rList", rList);
+	  model.addAttribute("address", address);
 	  return "seoul/location_detail";
   }
 }

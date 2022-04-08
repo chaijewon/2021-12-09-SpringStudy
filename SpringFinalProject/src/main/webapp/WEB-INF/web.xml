@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	
-	 <!-- <context-param>
+	<!-- <context-param>
         <param-name>contextClass</param-name>
         <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
        </context-param>
@@ -53,6 +53,7 @@
 		  <param-name>contextConfigLocation</param-name>
           <param-value>com.sist.chat.WebSocketConfig</param-value>
 		</init-param>
+		<load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
 		<servlet-name>appServlet2</servlet-name>

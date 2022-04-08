@@ -42,9 +42,11 @@ public interface SeoulMapper {
   public SeoulVO seoulLocationDetailData(int no);
   
   // 인근 맛집 
-  @Select("SELECT no,poster,name,type "
+  @Select("SELECT no,poster,name,type,rownum "
+		 +"FROM (SELECT no,poster,name,type "
 		 +"FROM food_location "
-		 +"WHERE address LIKE '%'||#{address}||'%'")
+		 +"WHERE address LIKE '%'||#{address}||'%') "
+		 +"WHERE rownum<=8")
   public List<FoodVO> seoulLocationFoodHouse(String address);
   
   // 맛집에 관련된 레시피 

@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class WebScoketController {
-   @RequestMapping("site/chat/chat.do")
+   @RequestMapping("chat/chat.do")
    public String chat_chat()
    {
-	   return "site/chat/chat";
+	   return "chat/chat";
    }
 }
