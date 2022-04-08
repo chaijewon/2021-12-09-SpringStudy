@@ -51,4 +51,13 @@ public class SeoulDAO {
    {
 	   return mapper.seoulLocationRecipe(type);
    }
+   public SeoulVO seoulNatureDetailData(int no)
+   {
+	   return mapper.seoulNatureDetailData(no);
+   }
+   
+   public SeoulVO seoulHotelDetailData(int no)
+   {
+	   return mapper.seoulHotelDetailData(no);
+   }
 }

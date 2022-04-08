@@ -157,6 +157,45 @@ public class SeoulController {
 	  model.addAttribute("address", address);
 	  return "seoul/location_detail";
   }
+  @GetMapping("seoul/nature_detail.do")
+  public String seoul_nature_detail(int no,Model model)
+  {
+	  SeoulVO vo=dao.seoulNatureDetailData(no);
+	  String address=vo.getAddress();
+	  System.out.println("주소:"+address);
+	  address=address.replaceAll("[0-9]", "");// 전체 숫자를 공백으로 변환 
+	  address=address.trim();
+	  System.out.println("1. address="+address);
+	  String addr1=address.substring(address.indexOf(" ")+1);
+	  System.out.println("2. addr1="+addr1);
+	  String addr2=addr1.trim().substring(0,addr1.indexOf(" "));
+	  System.out.println("3. addr2="+addr2);
+	  List<FoodVO> fList=dao.seoulLocationFoodHouse(addr2);
+	  model.addAttribute("vo", vo);
+	  model.addAttribute("fList", fList);
+	  model.addAttribute("address", address);
+	 return  "seoul/nature_detail";
+  }
+  
+  @GetMapping("seoul/hotel_detail.do")
+  public String hotel_detail(int no,Model model)
+  {
+	  SeoulVO vo=dao.seoulHotelDetailData(no);
+	  String address=vo.getAddress();
+	  System.out.println("주소:"+address);
+	  address=address.replaceAll("[0-9]", "");// 전체 숫자를 공백으로 변환 
+	  address=address.trim();
+	  System.out.println("1. address="+address);
+	  String addr1=address.substring(address.indexOf(" ")+1);
+	  System.out.println("2. addr1="+addr1);
+	  String addr2=addr1.trim().substring(0,addr1.indexOf(" "));
+	  System.out.println("3. addr2="+addr2);
+	  List<FoodVO> fList=dao.seoulLocationFoodHouse(addr2);
+	  model.addAttribute("vo", vo);
+	  model.addAttribute("fList", fList);
+	  model.addAttribute("address", address);
+	  return "seoul/hotel_detail";
+  }
 }
 
 

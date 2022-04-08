@@ -41,6 +41,14 @@ public interface SeoulMapper {
 		 +"WHERE no=#{no}")
   public SeoulVO seoulLocationDetailData(int no);
   
+  @Select("SELECT * FROM seoul_nature "
+			 +"WHERE no=#{no}")
+  public SeoulVO seoulNatureDetailData(int no);
+  
+  @Select("SELECT * FROM seoul_hotel "
+			 +"WHERE no=#{no}")
+  public SeoulVO seoulHotelDetailData(int no);
+  
   // 인근 맛집 
   @Select("SELECT no,poster,name,type,rownum "
 		 +"FROM (SELECT no,poster,name,type "
