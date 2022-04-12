@@ -41,7 +41,7 @@ h1{
          <td class="text-center">${vo.eng }</td>
          <td class="text-center">${vo.math }</td>
          <td class="text-center">
-          
+          <a href="/delete/${vo.hakbun }" class="btn btn-xs btn-danger">삭제</a>
          </td>
         </tr>
       </c:forEach>
