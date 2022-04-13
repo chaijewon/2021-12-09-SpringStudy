@@ -50,6 +50,8 @@ public interface MusicDAO extends JpaRepository<MusicEntity, Integer>{
     @Query(value="SELECT CEIL(COUNT(*)/20.0) FROM music "
     	  +"WHERE title LIKE CONCAT('%',:title,'%')",nativeQuery = true)
     public int musicFindTotalPage(@Param("title") String title);
+    
+    
 }
 
 
