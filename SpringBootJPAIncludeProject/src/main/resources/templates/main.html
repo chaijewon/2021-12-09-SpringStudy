@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+  <th:block th:include="fragments/header::headerFragment"></th:block>
+  <div class="container">
+   <th:block th:include="${main_html}">
+   </th:block>
+   <th:block th:include="fragments/footer::footerFragment"></th:block>
+  </div>
+</body>
+</html>
