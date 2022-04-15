@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style type="text/css">
+.container{
+  margin-top: 50px;
+}
+.row{
+  margin: 0px auto;
+  width:850px;
+}
+h1{
+   text-align: center
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Genie Music Top 200</h1>
+    <div class="row">
+     <table class="table">
+       <tr class="info">
+         <th class="text-center">순위</th>
+         <th class="text-center"></th>
+         <th class="text-center"></th>
+         <th class="text-center">곡명</th>
+         <th class="text-center">가수명</th>
+       </tr>
+       <tr th:each="vo:${list}">
+         <td class="text-center" th:text="${vo.no}"></td>
+         <td class="text-center">
+           <div th:switch="${vo.state}">
+             <span th:case="유지" th:text="유지"></span>
+             <span th:case="상승" th:text="상승" style="color:red"></span>
+             <span th:case="하강" th:text="하강" style="color:blue"></span>
+             <span th:if="${vo.idcrement}!=0" th:text="${vo.idcrement}"></span>
+           </div>
+         </td>
+         <td class="text-center">
+           <img th:src="${vo.poster}" style="width:35px;height: 35px">
+         </td>
+         <td class="text-center" th:text="${vo.title}"></td>
+         <td class="text-center" th:text="${vo.singer}"></td>
+       </tr>
+     </table>
+     <table class="table">
+       <tr>
+        <td class="text-center">
+          <a th:href="@{/(page=${curpage>1?curpage-1:curpage})}" class="btn btn-sm btn-info" th:text="이전"></a>
+          <span th:text="${curpage}"></span> page / <span th:text="${totalpage}"></span> pages
+          <a th:href="@{/(page=${curpage<totalpage?curpage+1:curpage})}" class="btn btn-sm btn-success" th:text="다음"></a>
+        </td>
+       </tr>
+     </table>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
