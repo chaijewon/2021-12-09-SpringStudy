@@ -41,6 +41,7 @@ public class MainController {
 	  model.addAttribute("endPage", endPage);
 	  model.addAttribute("title", title[Integer.parseInt(cno)-1]);
 	  model.addAttribute("list", list);
+	  model.addAttribute("cno", cno);
 	  model.addAttribute("main_content", "music/list");
 	  return "main";
   }
