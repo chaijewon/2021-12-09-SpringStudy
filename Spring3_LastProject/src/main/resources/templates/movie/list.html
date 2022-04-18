@@ -5,6 +5,68 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="wrapper row2">
+  <div id="breadcrumb" class="clear"> 
+    <!-- ################################################################################################ -->
+    <ul>
+      <li><a href="/main">Home</a></li>
+      <li><a href="/movie/list">상영영화</a></li>
+      <li><a href="/movie/list?cno=2">개봉예정</a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row3">
+  <main class="container clear"> 
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <div class="content"> 
+      <!-- ################################################################################################ -->
+      <div id="gallery">
+        <figure>
+          <header class="heading" th:text="${title}"></header>
+          <ul class="nospace clear">
+            <li th:each="vo,index:${list}" th:class="${index.index}%4==0?'one_quarter first':'one_quarter'">
+             <!--  /movie/detail_before?mno=1 -->
+             <a th:href="@{/movie/detail_before(mno=${vo.mno})}">
+              <img th:src="${vo.poster}" th:title="${vo.title}" style="width: 380px;height: 380px">
+             </a>
+            </li>
+          </ul>
+        </figure>
+      </div>
+      <!-- ################################################################################################ -->
+      <!-- ################################################################################################ -->
+      <nav class="pagination">
+        <ul>
+          <!-- <li><a href="#">&laquo; Previous</a></li> -->
+          <li th:class="${curpage==i}?'current':''" th:each="i:${#numbers.sequence(startPage,endPage)}"><a th:href="@{/movie/list(page=${i},cno=${cno})}" th:text="${i}"></a></li>
+          <!-- <li><a href="#">2</a></li>
+          <li><strong>&hellip;</strong></li>
+          <li><a href="#">6</a></li>
+          <li class="current"><strong>7</strong></li>
+          <li><a href="#">8</a></li>
+          <li><a href="#">9</a></li>
+          <li><strong>&hellip;</strong></li>
+          <li><a href="#">14</a></li>
+          <li><a href="#">15</a></li> -->
+          <!-- <li><a href="#">Next &raquo;</a></li> -->
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- / main body -->
+    <h1>최근 방문 영화</h1>
+    <hr>
+    <div>
+      <img th:each="vo:${cList}" th:src="${vo.poster}" style="width: 100px;height: 100px">
+    </div>
+    <div class="clear"></div>
+  </main>
+</div>
 </body>
 </html>

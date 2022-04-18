@@ -5,6 +5,76 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="wrapper row2">
+  <div id="breadcrumb" class="clear"> 
+    <!-- ################################################################################################ -->
+    <ul>
+      <li><a th:href="@{/main}">Home</a></li>
+      <li><a th:href="@{/movie/list}">영화목록</a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row3">
+  <main class="container clear"> 
+   <table class="table">
+     <tr>
+      <td align=center>
+       <iframe th:src="'http://youtube.com/embed/'+${vo.mkey}" style="width:900px;height: 450px"></iframe>
+       <!-- <iframe th:src="|http://youtube.com/embed/${vo.key}|" style="width:900px;height: 450px"></iframe> -->
+      </td>
+     </tr>
+   </table>
+   <div style="height: 30px"></div>
+   <table class="table">
+     <tr>
+       <td width=30% align=center valign="top" rowspan="7">
+         <img th:src="${vo.poster}" style="width: 100%">
+       </td>
+       <td colspan="2"><h3 th:text="${vo.title}"></h3></td>
+     </tr>
+     <tr>
+       <th width=20% align="right">감독</th>
+       <td width=50% th:text="${vo.director}"></td>
+     </tr>
+     <tr>
+       <th width=20% align="right">출연</th>
+       <td width=50% th:text="${vo.actor}"></td>
+     </tr>
+     <tr>
+       <th width=20% align="right">장르</th>
+       <td width=50% th:text="${vo.genre}"></td>
+     </tr>
+     <tr>
+       <th width=20% align="right">등급</th>
+       <td width=50% th:text="${vo.grade}"></td>
+     </tr>
+     <tr>
+       <th width=20% align="right">개봉일</th>
+       <td width=50% th:text="${vo.regdate}"></td>
+     </tr>
+     <tr>
+       <th width=20% align="right">누적 관객</th>
+       <td width=50% th:text="${vo.showuser}"></td>
+     </tr>
+     <tr>
+       <td colspan="3" align=right>
+        <a href="/movie/list">목록</a>
+       </td>
+     </tr>
+   </table>
+  </main>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
