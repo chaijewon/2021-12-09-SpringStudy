@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+  가요POPOST트롯JAZZ
+ -->
+<div class="wrapper row2">
+  <div id="breadcrumb" class="clear">
+   <ul>
+      <li><a href="#">Top200</a></li>
+      <li><a href="#">가요</a></li>
+      <li><a href="#">POP</a></li>
+      <li><a href="#">OST</a></li>
+      <li><a href="#">트롯</a></li>
+      <li><a href="#">JAZZ</a></li>
+    </ul>
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row3">
+  <main class="container clear"> 
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <div class="content"> 
+      <!-- ################################################################################################ -->
+      <div id="gallery">
+        <figure>
+          <header class="heading" th:text="${title}"></header>
+          <ul class="nospace clear">
+            <li th:class="${index.index}%4==0?'one_quarter first':'one_quarter'" 
+                th:each="vo,index:${list}">
+	            <a href="#">
+	              <img th:src="${vo.poster}" th:title="${vo.title}" style="width:380px;height: 380px">
+	            </a>
+            </li>
+          </ul>
+          <figcaption>Gallery Description Goes Here</figcaption>
+        </figure>
+      </div>
+      <!-- ################################################################################################ -->
+      <!-- ################################################################################################ -->
+      <nav class="pagination">
+        <ul>
+          <li th:if="${startPage}>1"><a th:href="@{/main(page=${startPage}-1)}">&laquo; Previous</a></li>
+          <!-- <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><strong>&hellip;</strong></li>
+          <li><a href="#">6</a></li>
+          <li class="current"><strong>7</strong></li>
+          <li><a href="#">8</a></li>
+          <li><a href="#">9</a></li>
+          <li><strong>&hellip;</strong></li>
+          <li><a href="#">14</a></li>
+          <li><a href="#">15</a></li> -->
+          <li th:each="i:${#numbers.sequence(startPage,endPage)}"
+           th:class="${i==curpage}?'current':''"
+          ><a th:href="@{/main(page=${i})}" th:text="${i}"></a></li>
+          <li th:if="${endPage<totalpage}"><a th:href="@{/main(page=${endPage+1})}">Next &raquo;</a></li>
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+</body>
+</html>
