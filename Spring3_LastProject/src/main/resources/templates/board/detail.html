@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style type="text/css">
+.row{
+  margin: 0px auto;
+  width:700px;
+}
+</style>
+</head>
+<!-- 
+    Java => 화면 출력 (JSTL/EL) ==> JSP
+            Thymeleaf / EL ==> HTML (Front-End)
+ -->
+<body>
+<div class="wrapper row2">
+  <div id="breadcrumb" class="clear"> 
+    <!-- ################################################################################################ -->
+    <ul>
+      <li><a th:href="@{/main}">Home</a></li>
+      <li><a href="/board/list">게시판 목록</a></li>
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row3">
+  <main class="container clear">
+    <table class="table">
+     <tr>
+      <th width=20% class="text-center">번호</th>
+      <td width=30% class="text-center" th:text="${vo.no}"></td>
+      <th width=20% class="text-center">작성일</th>
+      <td width=30% class="text-center" th:text="${vo.regdate}"></td>
+     </tr>
+     <tr>
+      <th width=20% class="text-center">이름</th>
+      <td width=30% class="text-center" th:text="${vo.name}"></td>
+      <th width=20% class="text-center">조회수</th>
+      <td width=30% class="text-center" th:text="${vo.hit}"></td>
+     </tr>
+     <tr>
+      <th width=20% class="text-center">제목</th>
+      <td colspan="3" class="text-center" th:text="${vo.subject}"></td>
+     </tr>
+     <tr>
+       <td colspan="4" valign="top" class="text-left" height="200">
+        <pre style="white-space: pre-wrap;border:none;" th:text="${vo.content}"></pre>
+       </td>
+     </tr>
+     <tr>
+       <td colspan="4" class="text-right">
+        <a th:href="@{/board/update(no=${vo.no})}" class="btn btn-xs btn-danger">수정</a>
+        <a th:href="@{/board/delete(no=${vo.no})}" class="btn btn-xs btn-primary">삭제</a>
+        <a href="/board/list" class="btn btn-xs btn-info">목록</a>
+       </td>
+     </tr>
+    </table>
+  </main>
+</div>
+</body>
+</html>
+
+
+
+
+
