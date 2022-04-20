@@ -10,6 +10,7 @@ import com.sist.react.dao.FoodMapper;
 import com.sist.react.dao.RecipeMapper;
 import com.sist.react.dao.SeoulMapper;
 import com.sist.react.vo.CategoryVO;
+import com.sist.react.vo.FoodVO;
 import com.sist.react.vo.RecipeVO;
 
 @Service
@@ -25,6 +26,18 @@ public class ReactServiceImpl implements ReactService{
 	public List<CategoryVO> foodCategoryData(Map map) {
 		// TODO Auto-generated method stub
 		return fMapper.foodCategoryData(map);
+	}
+
+	@Override
+	public List<FoodVO> foodCategoryListData(int cno) {
+		// TODO Auto-generated method stub
+		return fMapper.foodCategoryListData(cno);
+	}
+
+	@Override
+	public CategoryVO foodCategoryInfoData(int cno) {
+		// TODO Auto-generated method stub
+		return fMapper.foodCategoryInfoData(cno);
 	}
 	
 }

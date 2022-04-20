@@ -9,5 +9,26 @@
      FROM food_category
      WHERE cno BETWEEN #{start} AND #{end}
   </select>
+  <!-- 
+       String sql="~~ WHERE cno=?"
+       ps.setInt(1,?) // parameterType
+       while(rs.next())
+       {
+          FoodVO vo=new FoodVO(); // resultSet
+          vo.setXxx
+       }
+   -->
+  <select id="foodCategoryListData" resultType="com.sist.react.vo.FoodVO"
+    parameterType="int"
+  >
+    SELECT * FROM food_house
+    WHERE cno=#{cno}
+  </select>
+  <select id="foodCategoryInfoData" resultType="com.sist.react.vo.CategoryVO"
+   parameterType="int"
+  >
+    SELECT * FROM food_category
+    WHERE cno=#{cno}
+  </select>
   
 </mapper>
