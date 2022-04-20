@@ -59,4 +59,11 @@ public class FoodController {
 	   vo=service.foodCategoryInfoData(cno);
 	   return vo;
    }
+   @GetMapping("/food/detail")
+   public FoodVO foodDetailData(int no)
+   {
+	   FoodVO vo=service.foodDetailData(no);
+	   vo.setAddress(vo.getAddress().substring(0,vo.getAddress().indexOf("지")).trim());
+	   return vo;
+   }
 }

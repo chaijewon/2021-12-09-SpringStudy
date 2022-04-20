@@ -12,6 +12,7 @@ import com.sist.react.dao.SeoulMapper;
 import com.sist.react.vo.CategoryVO;
 import com.sist.react.vo.FoodVO;
 import com.sist.react.vo.RecipeVO;
+import com.sist.react.vo.SeoulVO;
 
 @Service
 public class ReactServiceImpl implements ReactService{
@@ -39,5 +40,24 @@ public class ReactServiceImpl implements ReactService{
 		// TODO Auto-generated method stub
 		return fMapper.foodCategoryInfoData(cno);
 	}
+
+	@Override
+	public FoodVO foodDetailData(int no) {
+		// TODO Auto-generated method stub
+		return fMapper.foodDetailData(no);
+	}
+    // seoul
+	@Override
+	public List<SeoulVO> seoulLocationData(Map map) {
+		// TODO Auto-generated method stub
+		return sMapper.seoulLocationData(map);
+	}
+
+	@Override
+	public int seoulLocationTotalPage() {
+		// TODO Auto-generated method stub
+		return sMapper.seoulLocationTotalPage();
+	}
+	// recipe
 	
 }

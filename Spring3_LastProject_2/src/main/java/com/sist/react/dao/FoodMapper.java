@@ -11,4 +11,5 @@ public interface FoodMapper {
    public List<CategoryVO> foodCategoryData(Map map);
    public List<FoodVO> foodCategoryListData(int cno);
    public CategoryVO foodCategoryInfoData(int cno);
+   public FoodVO foodDetailData(int no);
 }

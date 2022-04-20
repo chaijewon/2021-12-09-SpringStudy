@@ -30,5 +30,11 @@
     SELECT * FROM food_category
     WHERE cno=#{cno}
   </select>
-  
+  <!-- 상세보기  -->
+  <select id="foodDetailData" resultType="com.sist.react.vo.FoodVO"
+    parameterType="int"
+  >
+    SELECT * FROM food_house
+    WHERE no=#{no}
+  </select>
 </mapper>

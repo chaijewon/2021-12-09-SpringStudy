@@ -1,3 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sist.react.dao.SeoulMapper"></mapper>
+<mapper namespace="com.sist.react.dao.SeoulMapper">
+  <select id="seoulLocationData" resultType="com.sist.react.vo.SeoulVO"
+    parameterType="hashmap"
+  >
+    SELECT no,title,msg,address,poster,num
+    FROM (SELECT no,title,msg,address,poster,rownum as num 
+    FROM (SELECT no,title,msg,address,poster 
+    FROM seoul_location ORDER BY no ASC))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  <select id="seoulLocationTotalPage" resultType="int">
+    SELECT CEIL(COUNT(*)/12.0) FROM seoul_location
+  </select>
+</mapper>
