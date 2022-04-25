@@ -42,9 +42,22 @@ h1{
          <td class="text-center">${vo.math }</td>
          <td class="text-center">
           <a href="/delete/${vo.hakbun }" class="btn btn-xs btn-danger">삭제</a>
+          <a href="/update/${vo.hakbun }" class="btn btn-xs btn-primary">수정</a>
          </td>
         </tr>
       </c:forEach>
+    </table>
+    <table class='table'>
+      <tr>
+        <td>
+         <form method=post action="/find">
+         <input type=text name="ss" size=20 class="input-sm">
+         <input type=submit value="검색"
+           class="btn btn-sm btn-warning"
+         >
+         </form>
+        </td>
+      </tr>
     </table>
    </div>
   </div>

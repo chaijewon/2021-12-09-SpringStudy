@@ -16,6 +16,8 @@ public class FoodRestController {
     private FoodService service; // FoodController에서 사용하는 service와 동일한 객체 
     // 스프링은 싱글턴 객ㅊ테를 가지고 있다 (재사용) = 메모리 절약방법 
     //146페이지 객체 타입 (자바스크립트에 데이터 타입 : 객체 => {키:값} => JSON)
+    @Autowired
+    private FoodDAO dao;
     @GetMapping(value = "food_js/food_list.do",
     		produces = "text/plain;charset=UTF-8")
     public String food_list(int cno)
@@ -62,6 +64,62 @@ public class FoodRestController {
     	obj.put("title", vo.getTitle());
     	obj.put("subject",vo.getSubject());
     	return obj.toJSONString();
+    }
+    
+    @GetMapping(value="food_js/food_find.do",produces = "text/plain;charset=utf-8")
+    public String food_find(String page)
+    {
+    	if(page==null)
+    		page="1";
+    	int curpage=Integer.parseInt(page);
+    	Map map=new HashMap();
+    	int rowSize=12;
+    	int start=(rowSize*curpage)-(rowSize-1);
+    	int end=rowSize*curpage;
+    	map.put("start", start);
+    	map.put("end",end);
+    	List<FoodVO> list=dao.foodFindData(map);
+    	for(FoodVO vo:list)
+    	{
+    		String poster=vo.getPoster();
+    		poster=poster.substring(0,poster.indexOf("^"));
+    		vo.setPoster(poster);
+    		
+    	}
+    	int totalpage=dao.foodLocationTotalPage();
+    	
+    	final int BLOCK=10;
+        int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+        int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
+        if(endPage>totalpage)
+        {
+        	endPage=totalpage;
+        }
+        
+      //1. 배열 ==> javascript List(X) => [] => JSONArray
+    	JSONArray arr=new JSONArray();
+    	//2. 객체(VO) => javascript VO(X) => {} => JSONObject
+    	int i=0;
+    	for(FoodVO vo:list)
+    	{
+    		JSONObject obj=new JSONObject();
+    		obj.put("no", vo.getNo());
+    		obj.put("poster",vo.getPoster());
+    		obj.put("name",vo.getName());
+    		obj.put("score",vo.getScore());
+    		
+    		if(i==0)
+    		{
+    			obj.put("curpage",curpage);
+        		obj.put("totalpage",totalpage);
+        		obj.put("startPage",startPage);
+        		obj.put("endPage",endPage);
+        		obj.put("BLOCK",BLOCK);
+    		}
+    		arr.add(obj);
+    		i++;
+    	}
+    	return arr.toJSONString();
     }
 }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <!-- 
+               공통 사항 : 모든 개발자에 같이 사용 (DB,ViewResolver) : XML
+               개인적 사용(기능=>Model)  : Annotation
+               
+               객체와 객체의 연관 관계 설정 (DI)
+     -->
+    <bean id="dao" class="com.sist.dao.SeoulDAO"
+      p:sqlSessionFactory-ref="ssf"
+    />
+    <bean id="controller" class="com.sist.web.SeoulController"
+      p:dao-ref="dao"
+    />
+    <bean id="viewResolver" 
+         class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+         p:prefix="/"
+         p:suffix=".jsp"
+    />
+          
+</beans>

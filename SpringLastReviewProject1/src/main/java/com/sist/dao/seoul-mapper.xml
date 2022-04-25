@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.seoul-mapper">
+  <!-- 명소 읽기(목록) (페이징) -->
+  <!-- 명소 상세 보기 -->
+  <!-- 호텔 읽기(목록) (페이징,인덱스,인라인뷰,Join종류,데이터형관련,subquery,PL/SQL(프로시저 VS 함수 , 트리거) -->
+  <select id="hotelListData" resultType="HotelVO" parameterType="hashmap">
+    SELECT no,name,score,poster,images,address,num
+    FROM (SELECT no,name,score,poster,images,address,rownum as num 
+    FROM (SELECT /*+ INDEX_ASC(seoul_hotel sh_no_pk)*/no,name,score,poster,images,address 
+    FROM seoul_hotel))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  <select id="hotelTotalPage" resultType="int">
+    SELECT CEIL(COUNT(*)/12.0) FROM seoul_hotel
+  </select>
+  <!-- 호텔 상세 보기 -->
+  <select id="hotelDetailData" resultType="HotelVO" parameterType="int">
+    SELECT * FROM seoul_hotel
+    WHERE no=#{no}
+  </select>
+  <!-- Spring = AWS -->
+</mapper>

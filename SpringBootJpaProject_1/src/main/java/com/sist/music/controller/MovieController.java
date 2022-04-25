@@ -17,7 +17,7 @@ public class MovieController {
   @Autowired
   private MovieDAO dao;
   
-  @GetMapping("/movie")
+  @GetMapping("/movie_list")
   public String movie_main(String page,String cno,Model model)
   {
 	    if(page==null)
@@ -43,6 +43,7 @@ public class MovieController {
 		model.addAttribute("tottalpage", totalpage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("cno", cno);
 	  model.addAttribute("main_jsp", "../movie/list.jsp");
 	  return "main/main";
   }

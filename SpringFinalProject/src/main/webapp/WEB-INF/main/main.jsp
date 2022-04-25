@@ -6,7 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <link href="../layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@600;900&display=swap');
+*{
+   font-family: 'Cute Font', cursive;
+   font-family: 'Dongle', sans-serif;
+}
+</style>
 </head>
 <body id="top">
 <tiles:insertAttribute name="header"/>

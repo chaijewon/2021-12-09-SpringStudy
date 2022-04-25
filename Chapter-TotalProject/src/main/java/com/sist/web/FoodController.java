@@ -228,6 +228,11 @@ public class FoodController {
 		@Scheduled(fixedDelay=2000)
 		
     */
+   @GetMapping("chat.do")
+   public String food_chat()
+   {
+	   return "food/chat";
+   }
 }
 
 

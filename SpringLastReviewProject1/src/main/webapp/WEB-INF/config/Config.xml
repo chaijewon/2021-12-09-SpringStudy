@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MyBatis 설정 파일  -->
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+    <!-- 클래스 등록  -->
+    <typeAlias type="com.sist.vo.HotelVO" alias="HotelVO"/>
+    <typeAlias type="com.sist.vo.LocationVO" alias="LocationVO"/>
+    <typeAlias type="com.sist.vo.NatureVO" alias="NatureVO"/>
+  </typeAliases>
+  <mappers>
+    <!-- SQL문장 등록  -->
+    <mapper resource="com/sist/dao/seoul-mapper.xml"/>
+  </mappers>
+</configuration>

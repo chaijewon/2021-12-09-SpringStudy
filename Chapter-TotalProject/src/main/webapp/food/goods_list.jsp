@@ -20,8 +20,8 @@
 <body>
   <div class="container">
    <div class="row">
-    <c:forEach var="vo" items="${list}">
-        <div class="col-md-4">
+    <%-- <c:forEach var="vo" items="${list}"> --%>
+        <div class="col-md-4" th:each="vo:${list }">
 		    <div class="thumbnail">
 		      <a href="#">
 		        <img src="${vo.poster }" alt="Lights" style="width:230px;height:180px">
@@ -32,7 +32,7 @@
 		      </a>
 		    </div>
 		  </div>
-      </c:forEach>
+      <%-- </c:forEach> --%>
    </div>
    <div class="row">
      <div class="text-right">

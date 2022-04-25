@@ -42,7 +42,7 @@
 
     <!-- MyBatis연결 -->
     <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
-        p:dataSource-ref="ds"
+        p:dataSource-ref="dataSource"
     />
     <bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
         p:sqlSessionFactory-ref="ssf"

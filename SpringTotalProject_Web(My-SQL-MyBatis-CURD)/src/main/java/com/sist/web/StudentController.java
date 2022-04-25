@@ -50,7 +50,8 @@ public class StudentController {
    {
 	   return "std/insert";
    }
-   
+   // https://sports.v.daum.net/v/20220411144735807
+   // .do/admin/1234/홍길동
    @PostMapping("std/insert_ok.do")
    public String std_insert_ok(@ModelAttribute @Valid StudentVO studentVO,Errors result)
    {
@@ -83,6 +84,7 @@ public class StudentController {
 	   dao.stdUpdate(studentVO);
 	   return "redirect:list.do";
    }
+  
 }
 
 

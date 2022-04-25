@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <!-- 
+          ===========================================================
+          pom.xml : 라이브러리 설정 
+          web.xml : 톰캣에 의해 실행되는 파일, URL주소 , 예외처리 , 한글 변환을 설정
+           URL을 이용해서 톰캣이 서블릿을 찾아서 수행  
+          =============================== 실무 (셋팅이 완료)
+          application-context.xml : 사용 정의 클래스 등록 , ViewResolver등록
+          ========================================== 
+          application-datasource.xml : 데이터베이스 셋팅 
+          ========================================== 실무(셋팅이 완료)
+          config.xml : 마이바티스 설정 파일 
+          mapper.xml : SQL문장 저장되는 위치 
+            === 어노테이션을 이용하면 필요가 없어진다 
+          =========================== spring-boot (xml:pom.xml)
+                                   application.properties (셋팅)
+                                      => 기반 (springframework)
+     -->
+     <!--  사용자가 요청을 하면 요청을 받는 클래스(서블릿을 찾는다) : Controler (DispatcherServlet) -->
+     <!-- Controller -->
+     <!-- 
+          1. 브라우저 : 사용자 (클라이언트) : (주소란을 통해서만 요청이 가능)요청
+                      vuejs,react,ajax => 프로그래머가 설정   
+          2. 웹서버 : 아파치 , IIS ... (실무)
+          3. 톰캣 : 테스트용 웹서버 (접근 인원 : 50명) , JSP/Servlet 엔진
+             ==> Web Application Server (WAS)
+                    기술면접 (WAS사용, GET/POST => 한글 처리)
+                    도구:형상관리 사용 (GIT)   
+                    
+                    스프링에서 MVC 구조의 동작 방법 
+                   클라이언트에서 요청 => 확장자 .do ==> DispatcherServlet 
+                                        (Front-Controller)
+                                             | 요청 받기 , 결과값 전송
+                                             | Model을 찾는다 (HandlerMapping)
+                                      1. 요청 처리 (프로그래머가 처리하는 클래스 : Model) 
+                                             | 기능을 수행 => @GetMapping,@PostMapping, @RequestMapping
+                                      2. 메소드를 수행 (HandlerAdapter)
+                                      3. 수행된 결과를 JSP로 전송 
+                                             | ViewResolver (경로명 , 확장자를 전송) 
+                                      4. JSP에서 받아서 출력 
+                                             | jsp를 변경 (자바파일로 변경 , 컴파일 => .class변경(바이트 코드)
+                                      5. 톰캣에 의해 자바 실행 
+                                      6. 메모리에 HTML만 출력 
+                                      7. 브라우저에서 메모리에 저장된 HTML을 읽어서 인터프리터(사용자 화면에 출력)
+                                                기술면접 : MVC , 컴파일과 인터프리터(소스가 그대로 노출)의 차이점  
+                                          
+                       스프링의 역할 => 기능 
+           ======
+           1. 클래스 관리(라이브러리,사용자 정의 클래스) = 일명 클래스 관리자 
+              =====
+                            컴포넌트(한가지 기능을 가지고 있는 클래스:CPU , 게시판 , 서울 여행) 
+                             사이트에 필요한 컴포넌트 여러개를 모아서 관리 (컨테이너) 
+                            클래스 관리(생성 ~ 소멸) 
+           2. 생성 / 소멸에 필요한 데이터가 존재할 수 있다 
+                        =========== 객체생성시에 전송 : 주입 (DI)
+              => DI(의존성 주입) 
+                 = setter를 통해서 주입
+                   p:~
+                 = 생성자를 통해서 주입 
+                   c:~
+                 = 메소드 호출 (생성시 , 소멸시에만 가능)
+                   init-method, destroy-method
+                 DL(클래스 찾기)  => 각 클래스마다 등록시 중복이 안되는 ID를 부여
+            3. AOP : 중복을 제거 
+                              호출 시점을 정해서 호출이 가능 만드는 과정
+               = JoinPoint 
+                                  호출 시점
+                     = Before : 메소드 시작전 
+                     = After  : finally
+                     = After-Throwing : catch 수행시 
+                     = After-Returning : 정상수행시 처리 
+                     = Around : 메소드 위/아래 (트랜젝션,로그)
+                     public String dislpay()
+                     {
+                        @Before 
+                        try
+                        {
+                           @Around
+                           ===
+                           ===
+                           === 핵심 코딩 
+                           @Around
+                        }catch(Exception e)
+                        {
+                           @AfterThrowing
+                        }
+                        finally
+                        {
+                           @After
+                        }
+                        return 값  => @AfterRetruning
+                     }
+               = PointCut
+                                  어느 메소드할지 지정한다 
+               = Advice
+                 JointPoint+PointCut 
+               = Aspect  (공통 모듈) 
+                 Advice여러개를 모아서 관리 
+            ==> 기술면접 (DI => 100% , AOP => 70%)
+            ==> 어노테이션 VS XML을 언제 사용하는가 ? 차이점?
+            ==> Container의 종류 / Container란 
+            
+            ==> 라이브러리 사용법 
+                                컴퓨터 => 메인보드 역할 (연결만 담당하는 클래스의 집합) 
+                        ==================== 프레임워크 (기본 동작을 위한 셋팅이 되어 있다)
+            * 스프링에서 지원하는 라이브러리
+              = MVC(웹)
+                request,response,session,cookie ...
+              = ORM (데이터베이스 연결) = 트랜잭션
+                => Mybatis / JPA
+      -->
+     <servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 클래스관리자(WebApplicationContext:HandlerMapping,ViewResolver) -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/application-*.xml</param-value>
+		</init-param>
+	 
+		<!-- 
+			<init-param>
+			  <param-name>contextClass</param-name>
+			  <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+			</init-param>   
+			<init-param>
+			  <param-name>contextConfigLocation</param-name>
+			  <param-value>com.sist.config.FoodConfig</param-value>
+			</init-param> 
+		--> 
+	
+	</servlet>
+     <!-- Controller를 찾기 위한 URL주소 설정 (*.do)  -->
+    <servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+     <!-- Filter : 한글 변환 
+                      스프링에서는 가급적이면 HttpServletRequest,HttpServletResponse
+                      사용하지 않는 것을 권장 (request = 사용자의 정보(IP,PORT)
+           request => 사용자의 요청 정보 , 사용자의 요청에 대한 결과값 => 다시 전송 
+           === 스프링에서는 전송하는 객체 : Model
+                       스프링에서는 메소드 매개변수를  통해서  필요한 라이브러리 데이터 , 사용자 보낸 요청값이 
+           DispatcherServlet을 통해서 받아 온다 
+      -->
+     <filter>
+	  <filter-name>encodingFilter</filter-name>
+	  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	  <init-param>
+	    <param-name>encoding</param-name>
+	    <param-value>UTF-8</param-value>
+	  </init-param>
+	</filter>
+    <filter-mapping>
+	  <filter-name>encodingFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	  <!-- 사용자가 보낸 모든 URI의 주소에 한글을 적용한다  -->
+	</filter-mapping>
+     <!-- 에러 페이지 정리  -->
+</web-app>
+
+
+
+
+
+
+
+
+
+
+

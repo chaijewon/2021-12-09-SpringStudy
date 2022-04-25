@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style type="text/css">
+.container{
+  margin-top: 50px;
+}
+.row{
+  margin: 0px auto;
+  width:850px;
+}
+h1{
+   text-align: center
+}
+</style>
+</head>
+<body>
+   <div class="container">
+     <h1>Genie Top200</h1>
+     <div class="row">
+       <table class="table">
+         <tr class="danger">
+           <th class="text-center">순위</th>
+           <th class="text-center"></th>
+           <th class="text-center">곡명</th>
+           <th class="text-center">가수명</th>
+         </tr>
+         <tr th:each="vo: ${list}">
+           <td class="text-center" th:text="${vo.no }"></td>
+           <td class="text-center">
+            <img th:src="${vo.poster }" style="width:35px;height: 35px">
+           </td>
+           <td th:text="${vo.title }"></td>
+           <td th:text="${vo.singer }"></td>
+         </tr>
+       </table>
+       <table class="table">
+         <tr>
+           <td class="text-center">
+             <a th:href="@{/(page=${curpage>1?curpage-1:curpage })}" class="btn btn-sm btn-info">이전</a>
+              <span th:text="${curpage } "></span>page / <span th:text="${totalpage }"></span> pages
+             <a th:href="@{/(page=${curpage<totalpage?curpage+1:curpage })}" class="btn btn-sm btn-success">다음</a>
+           </td>
+         </tr>
+       </table>
+     </div>
+   </div>
+</body>
+</html>
+</body>
+</html>
